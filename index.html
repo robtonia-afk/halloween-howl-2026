@@ -1,0 +1,388 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex"><title>Halloween Howl 2026</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;700&family=Barlow:wght@400;600&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<style id="css">
+:root{color-scheme:light;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+/* Layout: one narrow column. Judge types heats in after each race; everyone else reads results, standings and lane stats. */
+:root{
+  --bg:#edf2f3; --panel:#ffffff; --ink:#0d2530; --muted:#587280; --line:#d2dee2;
+  --accent:#0a6a73; --accent-ink:#ffffff; --go:#1b7a45; --stop:#b3261e; --warn:#8a5a00;
+  --l1:#d6453d; --l2:#d99a1b; --l3:#2f8f5b; --l4:#2f6fb5; --l5:#7a4fb0; --l6:#5b6b73;
+  --gold:#a8830f; --silver:#6f7d84; --bronze:#a05d2c; --hi:#dff1e6;
+  --disp:'Barlow Condensed','Arial Narrow',sans-serif; --body:'Barlow',system-ui,sans-serif; --mono:'IBM Plex Mono',ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0a1920; --panel:#112731; --ink:#e5f0f2; --muted:#8ba7b3; --line:#22404c;
+  --accent:#4fc1c9; --accent-ink:#06242a; --go:#46b575; --stop:#ef6f66; --warn:#e0b04a;
+  --l1:#ef6f66; --l2:#e8b44a; --l3:#58c58a; --l4:#6aa3e6; --l5:#a98be0; --l6:#93a5ad;
+  --gold:#e2bd45; --silver:#a9b5ba; --bronze:#cf9060; --hi:#173a2b; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0a1920; --panel:#112731; --ink:#e5f0f2; --muted:#8ba7b3; --line:#22404c;
+  --accent:#4fc1c9; --accent-ink:#06242a; --go:#46b575; --stop:#ef6f66; --warn:#e0b04a;
+  --l1:#ef6f66; --l2:#e8b44a; --l3:#58c58a; --l4:#6aa3e6; --l5:#a98be0; --l6:#93a5ad;
+  --gold:#e2bd45; --silver:#a9b5ba; --bronze:#cf9060; --hi:#173a2b; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:16px/1.4 var(--body);padding-block:12px 40px;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+#root{max-width:780px;margin:0 auto;display:flex;flex-direction:column;gap:14px}
+button,input,select,textarea{font:inherit;color:inherit}
+button{cursor:pointer;border:1px solid var(--line);background:var(--panel);border-radius:8px;min-height:44px;padding:0 16px;font-weight:600}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+button.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+button.danger{color:var(--stop);border-color:var(--stop)}
+button.small{min-height:36px;padding:0 12px;font-size:14px}
+button.big{min-height:60px;font-family:var(--disp);font-size:26px;letter-spacing:.05em;text-transform:uppercase}
+input,select,textarea{width:100%;background:var(--panel);border:1px solid var(--line);border-radius:8px;min-height:44px;padding:8px 12px}
+input[aria-invalid=true]{border-color:var(--stop);box-shadow:0 0 0 1px var(--stop)}
+textarea{min-height:120px;resize:vertical}
+label{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.06em}
+h1,h2,h3{font-family:var(--disp);margin:0;letter-spacing:.01em}
+h3{font-size:22px}
+.top{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.top h1{font-size:34px;line-height:1.05;font-weight:700;text-wrap:balance}
+.sub{color:var(--muted);font-size:14px}
+.chip{font:600 12px var(--body);letter-spacing:.08em;text-transform:uppercase;padding:4px 10px;border-radius:99px;border:1px solid var(--line);color:var(--muted);white-space:nowrap}
+.chip.live{color:var(--go);border-color:var(--go)}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);overflow-x:auto}
+.tabs button{border:0;border-bottom:3px solid transparent;border-radius:0;background:none;min-height:46px;padding:0 12px;font-family:var(--disp);font-size:20px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
+.tabs button[aria-selected=true]{color:var(--ink);border-bottom-color:var(--accent)}
+.banner{border:1px solid var(--warn);color:var(--warn);border-radius:8px;padding:10px 12px;display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px;display:flex;flex-direction:column;gap:12px}
+.grid2{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.lane{border-left:10px solid var(--lc);background:var(--bg);border-radius:8px;padding:10px;display:grid;grid-template-columns:34px 1fr;gap:8px 10px;align-items:center}
+.lane .num{font:700 34px/1 var(--disp);color:var(--lc)}
+.lane .f2{grid-column:2;display:grid;grid-template-columns:1fr 120px;gap:8px}
+.lane input.time{font:600 20px var(--mono)}
+.table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.table th{font:600 12px var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);white-space:nowrap}
+.table td{padding:9px 8px;border-bottom:1px solid var(--line);vertical-align:middle}
+.table tr:last-child td{border-bottom:0}
+.table .t{font:600 19px var(--mono);white-space:nowrap}
+.table .pl{font:700 26px var(--disp);width:44px}
+.table .r{text-align:right}
+.pl.p1{color:var(--gold)} .pl.p2{color:var(--silver)} .pl.p3{color:var(--bronze)}
+.badge{display:inline-flex;align-items:center;justify-content:center;min-width:46px;height:46px;border-radius:50%;font:700 20px/1 var(--disp);letter-spacing:.02em;color:#fff;background:var(--muted);border:3px solid var(--panel);box-shadow:0 0 0 2px var(--bc,var(--muted))}
+.badge.sm{min-width:28px;height:28px;font-size:13px;border-width:2px}
+.badge.sm sup{font-size:9px;top:-4px}
+.runcell{white-space:nowrap}
+.runcell .badge{margin-left:6px;vertical-align:middle}
+.badge sup{font-size:12px;margin-left:1px;vertical-align:baseline;position:relative;top:-6px}
+.badge.b1{--bc:var(--gold);background:var(--gold)} .badge.b2{--bc:var(--silver);background:var(--silver)} .badge.b3{--bc:var(--bronze);background:var(--bronze)} .badge.b4{--bc:var(--muted);background:var(--muted)}
+.badge.none{background:transparent;color:var(--muted);box-shadow:0 0 0 2px var(--line)}
+.filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.table tr.me td{background:var(--hi)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:10px}
+.stat{border:1px solid var(--line);border-radius:8px;padding:8px 10px}
+.stat b{display:block;font:700 24px/1.1 var(--disp)} .stat span{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:600}
+.dot{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+.wrap{overflow-x:auto}
+.hrow{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
+.tag{font:600 12px var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent);border-radius:4px;padding:2px 6px}
+.empty{color:var(--muted);text-align:center;padding:28px 12px}
+.note{font-size:13px;color:var(--muted)}
+.row2{display:flex;gap:8px;flex-wrap:wrap}
+#toast{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(20px + env(safe-area-inset-bottom,0px));background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:99px;font-weight:600;max-width:90vw;z-index:20}
+</style></head><body>
+<div id="root"></div>
+<div id="toast" hidden></div>
+<script id="state" type="application/json">{"v":2,"rev":0,"title":"Halloween Howl 2026","date":"2026-11-01","lanes":4,"types":["500 Qual","Novice Qual","Backpaddle","1000","Novice Final","Mixed Final"],"roster":["KP Dragons","Ripple Effect","Portland Renegades","SFHKERS","Alameda 1","Dieselfish","OPD Wok'n Deading","Oakland Renegades","South Boo Synergy","Dragon Hella Max","Summon the Dragon","Ba Ba ba ba ba ba nanna","Bad Zero","Alameda 2"],"heats":[]}</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+<script id="app">
+(function(){
+var REPO='robtonia-afk/halloween-howl-2026',BRANCH='main',FILE='data.json',RAW='https://raw.githubusercontent.com/'+REPO+'/'+BRANCH+'/'+FILE;
+var FR=60; /* the last two digits of a time are sixtieths of a second */
+var $=function(s){return document.querySelector(s)};
+var esc=function(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
+var p2=function(n){return (n<10?'0':'')+n};
+function lsGet(k){try{var v=localStorage.getItem(k);return v?JSON.parse(v):null}catch(e){return null}}
+function lsSet(k,v){try{localStorage.setItem(k,JSON.stringify(v))}catch(e){}}
+
+var S=JSON.parse($('#state').textContent);
+var pubRev=S.rev||0,dirty=false,lastLoad=null;
+var judge=location.hash==='#judge';
+var loc=lsGet('dbrr-state');
+if(judge&&loc&&loc.S&&loc.rev>pubRev){S=loc.S;dirty=true}
+var tab=judge?'enter':'results',armed=null,status='';
+var dl={save:function(o){return new Promise(function(res){var b=o.data instanceof ArrayBuffer||typeof o.data==='string'?new Blob([o.data]):o.data,u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=o.filename;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(u);a.remove()},1000);res()})}};
+var fHeat='',fTeam='';
+var LC=['var(--l1)','var(--l2)','var(--l3)','var(--l4)','var(--l5)','var(--l6)'];
+function commit(){S.rev=(S.rev||0)+1;lsSet('dbrr-state',{rev:S.rev,S:S});dirty=S.rev>pubRev}
+
+/* ---- time: t is a whole number of sixtieths of a second ---- */
+function fmtT(t){return p2(Math.floor(t/3600))+':'+p2(Math.floor(t/60)%60)+':'+p2(t%60)}
+function parseT(s){
+  s=String(s).trim();if(!s)return null;var mm,ss,ff,m;
+  if(/^\d{3,6}$/.test(s)){var d=('000000'+s).slice(-6);mm=+d.slice(0,2);ss=+d.slice(2,4);ff=+d.slice(4,6)}
+  else if((m=s.match(/^(\d{1,2})[:.;,](\d{1,2})(?:[:.;,](\d{1,2}))?$/))){mm=+m[1];ss=+m[2];ff=m[3]==null?0:+m[3]}
+  else return null;
+  if(ss>59||ff>=FR)return null;return (mm*60+ss)*FR+ff;
+}
+function secs(t){return Math.round(t/FR*100)/100}
+function sumT(a){return a.reduce(function(x,y){return x+y},0)}
+
+/* ---- analysis ---- */
+function heatsSorted(){return (S.heats||[]).slice().sort(function(a,b){return (a.n-b.n)||(a.ts-b.ts)})}
+function fin(r){return r.st==='ok'&&r.t!=null}
+function placed(rows){
+  var ok=rows.filter(fin).sort(function(a,b){return a.t-b.t}),m=new Map(),p=0,last=null;
+  ok.forEach(function(r,i){if(r.t!==last){p=i+1;last=r.t}m.set(r,p)});return m;
+}
+function standings(){
+  var by={};
+  heatsSorted().forEach(function(h){h.rows.forEach(function(r){
+    if(!fin(r))return;var o=by[h.type]=by[h.type]||{};var k=r.team.trim().toLowerCase();
+    var x=o[k]=o[k]||{team:r.team,runs:0,total:0,laps:[]};x.runs++;x.total+=r.t;x.laps.push(r.t)})});
+  var out=[];
+  Object.keys(by).forEach(function(type){
+    var arr=Object.keys(by[type]).map(function(k){return by[type][k]}),max=Math.max.apply(null,arr.map(function(x){return x.runs}));
+    arr.forEach(function(x){x.full=x.runs===max});
+    arr.sort(function(a,b){return (b.full-a.full)||(a.total-b.total)});
+    var rk=0;arr.forEach(function(x){x.rank=x.full?++rk:null});
+    out.push({type:type,runs:max,list:arr});
+  });
+  var order=S.types||[];
+  out.sort(function(a,b){var i=order.indexOf(a.type),j=order.indexOf(b.type);return (i<0?99:i)-(j<0?99:j)});
+  return out;
+}
+function laneStats(){
+  var L=[];for(var i=1;i<=S.lanes;i++)L.push({lane:i,runs:0,wins:0,heatsCmp:0,placeSum:0,dSum:0,best:null,bestType:'',bestTeam:''});
+  var byType={};
+  (S.heats||[]).forEach(function(h){
+    var ok=h.rows.filter(fin);if(!ok.length)return;var pl=placed(h.rows),mean=sumT(ok.map(function(r){return r.t}))/ok.length,cmp=ok.length>1;
+    ok.forEach(function(r){var l=L[r.lane-1];if(!l)return;l.runs++;
+      if(l.best==null||r.t<l.best){l.best=r.t;l.bestType=h.type;l.bestTeam=r.team}
+      if(cmp){l.heatsCmp++;l.placeSum+=pl.get(r);l.dSum+=(r.t-mean)/FR;if(pl.get(r)===1)l.wins++}
+      var o=byType[h.type]=byType[h.type]||{};var b=o[r.lane];if(!b||r.t<b.t)o[r.lane]={t:r.t,team:r.team}});
+  });
+  return {lanes:L,byType:byType};
+}
+function teamNames(){var s={};(S.roster||[]).forEach(function(t){if(t)s[t]=1});(S.heats||[]).forEach(function(h){h.rows.forEach(function(r){if(r.team)s[r.team]=1})});return Object.keys(s).sort()}
+function toast(t){var e=$('#toast');e.textContent=t;e.hidden=false;clearTimeout(toast.t);toast.t=setTimeout(function(){e.hidden=true},3000)}
+function arm(k){armed=k;clearTimeout(arm.t);arm.t=setTimeout(function(){armed=null;render()},3000);render()}
+
+/* ---- draft heat (the entry form) ---- */
+var draft=lsGet('dbrr-draft');
+function blankDraft(keepType){
+  var n=0;(S.heats||[]).forEach(function(h){if(h.n>n)n=h.n});
+  var rows=[];for(var i=0;i<S.lanes;i++)rows.push({team:'',time:'',st:'ok'});
+  return {id:null,n:n+1,type:keepType||(S.types&&S.types[0])||'',rows:rows};
+}
+if(!draft||draft.rows.length!==S.lanes)draft=blankDraft();
+function saveDraft(){lsSet('dbrr-draft',draft)}
+
+/* ---- views ---- */
+function head(){
+  var dt=S.date?new Date(S.date+'T12:00:00').toLocaleDateString(undefined,{weekday:'long',month:'long',day:'numeric',year:'numeric'}):'';
+  return '<div class="top"><div><h1>'+esc(S.title)+'</h1><div class="sub">'+esc(dt)+'</div></div><span class="chip '+(judge?'':'live')+'">'+(judge?'Judge':'Live results')+'</span></div>'+
+    (judge&&dirty?'<div class="banner"><span>Saved on this device, not published yet.</span><button class="small primary" data-act="publish">Publish now</button></div>':'')+
+    (judge&&(S.heats||[]).length-(lsGet('dbrr-bk')||0)>=3?'<div class="banner"><span>'+((S.heats||[]).length-(lsGet('dbrr-bk')||0))+' heats entered since your last backup.</span><button class="small primary" data-act="bkcsv">Download backup</button></div>':'')+
+    (judge&&!lsGet('dbrr-token')?'<div class="banner"><span>Add your GitHub token in Setup so each heat publishes automatically.</span><button class="small primary" data-act="tab" data-v="setup">Open Setup</button></div>':'')+
+    (status?'<div class="note">'+esc(status)+'</div>':'')+
+    (!judge&&lastLoad?'<div class="note">Updated '+lastLoad.toLocaleTimeString([], {hour:'numeric',minute:'2-digit'})+'. This page refreshes by itself.</div>':'');
+}
+function tabsHtml(){
+  var t=judge?[['enter','Enter'],['results','Results'],['standings','Standings'],['lanes','Lanes'],['setup','Setup']]:[['results','Results'],['standings','Standings']];
+  return '<div class="tabs" role="tablist">'+t.map(function(x){return '<button role="tab" aria-selected="'+(tab===x[0])+'" data-act="tab" data-v="'+x[0]+'">'+x[1]+'</button>'}).join('')+'</div>';
+}
+function pc(p){return p<=3?' p'+p:''}
+function badge(p,sm){
+  if(!p)return '<span class="badge none" title="No placing" aria-label="No placing">–</span>';
+  var suf=(p%100>=11&&p%100<=13)?'th':({1:'st',2:'nd',3:'rd'}[p%10]||'th');
+  return '<span class="badge'+(sm?' sm':'')+' b'+Math.min(p,4)+'" aria-label="'+p+suf+' place">'+p+'<sup>'+suf+'</sup></span>';
+}
+function enterView(){
+  var d=draft,ed=!!d.id;
+  var rows=d.rows.map(function(r,i){
+    return '<div class="lane" style="--lc:'+LC[i%6]+'"><span class="num">'+(i+1)+'</span><input data-f="team" data-i="'+i+'" list="teams" placeholder="Team in lane '+(i+1)+'" value="'+esc(r.team)+'" aria-label="Lane '+(i+1)+' team">'+
+      '<div class="f2"><input class="time" data-f="time" data-i="'+i+'" value="'+esc(r.time)+'" placeholder="MM:SS:ff" inputmode="numeric" aria-label="Lane '+(i+1)+' time"><select data-f="st" data-i="'+i+'" aria-label="Lane '+(i+1)+' status">'+[['ok','Finished'],['DNS','DNS'],['DNF','DNF'],['DQ','DQ']].map(function(o){return '<option value="'+o[0]+'"'+(r.st===o[0]?' selected':'')+'>'+o[1]+'</option>'}).join('')+'</select></div></div>';
+  }).join('');
+  return '<div class="panel"><div class="hrow"><h3>'+(ed?'Editing heat '+d.n:'New heat')+'</h3>'+(ed?'<span class="tag">Editing</span>':'')+'</div>'+
+    '<div class="grid2"><label>Heat number<input type="number" min="1" data-f="n" value="'+d.n+'" inputmode="numeric"></label><label>Event<input data-f="type" list="types" value="'+esc(d.type)+'"></label></div>'+
+    rows+'<div class="note">Type a time as 030552 or 03:05:52. The last two digits are sixtieths of a second (00 to 59). Leave a lane empty if no boat ran in it.</div>'+
+    '<button class="primary big" data-act="saveheat">'+(ed?'Save changes':'Save heat')+'</button>'+
+    (ed?'<div class="row2"><button class="small" data-act="canceledit">Cancel editing</button><button class="small danger" data-act="delheat" data-id="'+d.id+'">'+(armed==='del'?'Tap again to delete this heat':'Delete this heat')+'</button></div>':'')+
+    '</div><datalist id="teams">'+teamNames().map(function(t){return '<option value="'+esc(t)+'">'}).join('')+'</datalist><datalist id="types">'+(S.types||[]).map(function(t){return '<option value="'+esc(t)+'">'}).join('')+'</datalist>';
+}
+function sameTeam(r,t){return r.team.trim().toLowerCase()===t.trim().toLowerCase()}
+function teamSummary(t){
+  var runs=0,wins=0,pSum=0,pN=0,best=null,lanes={};
+  heatsSorted().forEach(function(h){var pl=placed(h.rows);h.rows.forEach(function(r){if(!sameTeam(r,t))return;runs++;lanes[r.lane]=(lanes[r.lane]||0)+1;
+    if(fin(r)){if(best==null||r.t<best)best=r.t;var p=pl.get(r);if(h.rows.filter(fin).length>1){pSum+=p;pN++;if(p===1)wins++}}})});
+  var ev=standings().map(function(e){var x=e.list.filter(function(y){return y.team.trim().toLowerCase()===t.trim().toLowerCase()})[0];return x?'<tr><td>'+esc(e.type)+'</td><td class="r">'+(x.rank?badge(x.rank):'<span class="note">'+x.runs+' of '+e.runs+' runs</span>')+'</td><td class="t r">'+fmtT(x.total)+'</td></tr>':''}).join('');
+  var ls=Object.keys(lanes).sort().map(function(l){return '<span class="tag" style="color:var(--ink);border-color:var(--line)"><span class="dot" style="background:'+LC[(l-1)%6]+'"></span>Lane '+l+' x'+lanes[l]+'</span>'}).join(' ');
+  return '<div class="panel"><h3>'+esc(t)+'</h3><div class="stats"><div class="stat"><b>'+runs+'</b><span>Heats</span></div><div class="stat"><b>'+wins+'</b><span>Heat wins</span></div><div class="stat"><b>'+(best==null?'–':fmtT(best))+'</b><span>Best time</span></div><div class="stat"><b>'+(pN?(pSum/pN).toFixed(1):'–')+'</b><span>Avg place</span></div></div><div>'+ls+'</div>'+
+    (ev?'<div class="wrap"><table class="table"><tr><th>Event</th><th class="r">Standing</th><th class="r">Total</th></tr>'+ev+'</table></div>':'')+'</div>';
+}
+function resultsView(){
+  var all=heatsSorted().reverse();
+  if(!all.length)return '<div class="panel empty"><h2>No results yet</h2><div>Each heat appears here as soon as it is entered.</div></div>';
+  var seen={};all.forEach(function(h){h.rows.forEach(function(r){seen[r.team.trim()]=1})});
+  var teams=Object.keys(seen).sort(function(a,b){return a.toLowerCase()<b.toLowerCase()?-1:1});
+  if(fHeat&&!all.some(function(h){return h.id===fHeat}))fHeat='';
+  if(fTeam&&!teams.some(function(t){return t.toLowerCase()===fTeam.toLowerCase()}))fTeam='';
+  var bar='<div class="filters"><label>Heat<select data-flt="heat"><option value="">All heats</option>'+all.slice().reverse().map(function(h){return '<option value="'+h.id+'"'+(fHeat===h.id?' selected':'')+'>Heat '+h.n+' - '+esc(h.type)+'</option>'}).join('')+'</select></label>'+
+    '<label>Team<select data-flt="team"><option value="">All teams</option>'+teams.map(function(t){return '<option value="'+esc(t)+'"'+(fTeam.toLowerCase()===t.toLowerCase()?' selected':'')+'>'+esc(t)+'</option>'}).join('')+'</select></label></div>';
+  var hs=all.filter(function(h){return (!fHeat||h.id===fHeat)&&(!fTeam||h.rows.some(function(r){return sameTeam(r,fTeam)}))});
+  var cards=hs.length?hs.map(function(h){
+    var pl=placed(h.rows),rows=h.rows.slice().sort(function(a,b){var pa=pl.get(a),pb=pl.get(b);if(pa&&pb)return pa-pb||a.lane-b.lane;if(pa)return -1;if(pb)return 1;return a.lane-b.lane});
+    var body=rows.map(function(r){var p=pl.get(r);return '<tr'+(fTeam&&sameTeam(r,fTeam)?' class="me"':'')+'><td>'+badge(p)+'</td><td><span class="dot" style="background:'+LC[(r.lane-1)%6]+'"></span>Lane '+r.lane+'</td><td>'+esc(r.team)+'</td><td class="t r">'+(fin(r)?fmtT(r.t):'<span style="color:var(--stop)">'+r.st+'</span>')+'</td></tr>'}).join('');
+    return '<div class="panel"><div class="hrow"><h3>Heat '+h.n+' <span class="tag">'+esc(h.type)+'</span></h3>'+(judge?'<button class="small" data-act="edit" data-id="'+h.id+'">Edit</button>':'')+'</div><div class="wrap"><table class="table"><tr><th>Pl</th><th>Lane</th><th>Team</th><th class="r">Time</th></tr>'+body+'</table></div></div>';
+  }).join(''):'<div class="panel empty">No heats match those choices.</div>';
+  return bar+(fTeam?teamSummary(teams.filter(function(t){return t.toLowerCase()===fTeam.toLowerCase()})[0]):'')+cards;
+}
+function standingsView(){
+  var st=standings();if(!st.length)return '<div class="panel empty"><h2>No standings yet</h2><div>Standings add up each team\'s times within an event.</div></div>';
+  return st.map(function(e){
+    var vals=[];e.list.forEach(function(x){x.laps.forEach(function(t){if(vals.indexOf(t)<0)vals.push(t)})});vals.sort(function(a,b){return a-b});
+    var rk=function(t){var i=vals.indexOf(t);return i>=0&&i<3?i+1:0};
+    var heads='';for(var i=1;i<=e.runs;i++)heads+='<th class="r">'+(e.runs>1?'Run '+i:'Time')+'</th>';
+    var body=e.list.map(function(x){
+      var cells='';for(var i=0;i<e.runs;i++){var t=x.laps[i];cells+='<td class="t r runcell">'+(t==null?'<span class="note">–</span>':fmtT(t)+(e.runs>1&&rk(t)?badge(rk(t),1):''))+'</td>'}
+      return '<tr><td>'+badge(x.rank||0)+'</td><td>'+esc(x.team)+(x.full?'':' <span class="note">'+x.runs+' of '+e.runs+' runs</span>')+'</td>'+cells+(e.runs>1?'<td class="t r">'+fmtT(x.total)+'</td>':'')+'</tr>';
+    }).join('');
+    return '<div class="panel"><div class="hrow"><h3>'+esc(e.type)+'</h3><span class="note">'+(e.runs>1?'Ranked by total of '+e.runs+' runs':'Single run')+'</span></div><div class="wrap"><table class="table"><tr><th>#</th><th>Team</th>'+heads+(e.runs>1?'<th class="r">Total</th>':'')+'</tr>'+body+'</table></div><div class="note">'+(e.runs>1?'The large medal is each team\'s place by total. The small medals mark the three fastest single times in this event so far.':'Medals show each team\'s place.')+'</div></div>';
+  }).join('');
+}
+function lanesView(){
+  var ls=laneStats(),any=ls.lanes.some(function(l){return l.runs});
+  if(!any)return '<div class="panel empty"><h2>No lane data yet</h2><div>Once heats are in, this shows which lane is running fastest.</div></div>';
+  var body=ls.lanes.map(function(l){
+    var ap=l.heatsCmp?(l.placeSum/l.heatsCmp).toFixed(2):'–',ad=l.heatsCmp?(l.dSum/l.heatsCmp):null;
+    return '<tr><td><span class="dot" style="background:'+LC[(l.lane-1)%6]+'"></span>Lane '+l.lane+'</td><td class="r">'+l.runs+'</td><td class="r">'+l.wins+'</td><td class="r">'+ap+'</td><td class="t r">'+(ad==null?'–':(ad>0?'+':'')+ad.toFixed(2)+' s')+'</td><td class="t r">'+(l.best==null?'–':fmtT(l.best))+'</td></tr>';
+  }).join('');
+  var fast=ls.lanes.filter(function(l){return l.heatsCmp}).sort(function(a,b){return a.dSum/a.heatsCmp-b.dSum/b.heatsCmp})[0];
+  var sum=fast?'Lane '+fast.lane+' has been the quickest relative to the other boats in its heat ('+(fast.dSum/fast.heatsCmp).toFixed(2)+' s per heat against the heat average, over '+fast.heatsCmp+' heats).':'';
+  var types=Object.keys(ls.byType).sort(function(a,b){var o=S.types||[],i=o.indexOf(a),j=o.indexOf(b);return (i<0?99:i)-(j<0?99:j)});
+  var bt=types.map(function(t){
+    var o=ls.byType[t],best=Math.min.apply(null,Object.keys(o).map(function(k){return o[k].t}));
+    var cells=ls.lanes.map(function(l){var b=o[l.lane];return '<td class="t r"'+(b&&b.t===best?' style="color:var(--go)"':'')+'>'+(b?fmtT(b.t):'–')+'</td>'}).join('');
+    return '<tr><td>'+esc(t)+'</td>'+cells+'</tr>';
+  }).join('');
+  return '<div class="panel"><h3>By lane, all events</h3><div class="wrap"><table class="table"><tr><th>Lane</th><th class="r">Runs</th><th class="r">Wins</th><th class="r">Avg place</th><th class="r">vs heat avg</th><th class="r">Fastest</th></tr>'+body+'</table></div><div class="note">'+esc(sum)+' "vs heat avg" is negative when a lane beats the other boats it raced against, which cancels out the distance. Small samples, so treat it as a hint.</div></div>'+
+    '<div class="panel"><h3>Fastest time per lane, by event</h3><div class="wrap"><table class="table"><tr><th>Event</th>'+ls.lanes.map(function(l){return '<th class="r">Lane '+l.lane+'</th>'}).join('')+'</tr>'+bt+'</table></div><div class="note">Green marks the fastest lane in each event.</div></div>';
+}
+function setupView(){
+  return '<div class="panel"><div class="grid2"><label>Event name<input data-set="title" value="'+esc(S.title)+'"></label><label>Date<input type="date" data-set="date" value="'+esc(S.date)+'"></label><label>Lanes<select data-set="lanes">'+[2,3,4,5,6].map(function(n){return '<option'+(S.lanes===n?' selected':'')+'>'+n+'</option>'}).join('')+'</select></label></div>'+
+    '<label>Event types, one per line (the Enter tab suggests these)<textarea data-set="types">'+esc((S.types||[]).join('\n'))+'</textarea></label>'+
+    '<label>Teams, one per line (suggested while typing)<textarea data-set="roster">'+esc((S.roster||[]).join('\n'))+'</textarea></label></div>'+
+    '<div class="panel"><h3>GitHub token</h3><div class="note">Needed to publish. Paste the token once on this device. It stays in this browser only and is never saved in the page or the repo. '+(lsGet('dbrr-token')?'A token is saved here.':'No token saved yet.')+'</div><label>Token<input type="password" data-token="1" placeholder="github_pat_..." autocomplete="off"></label></div>'+
+    '<div class="panel"><h3>Share and export</h3><div class="note">Saving a heat publishes it to the public page, which refreshes for participants within about a minute. Participants get Results and Standings only. You get these controls by opening the page address with #judge on the end. The Excel workbook has every result with its lane, a heat-by-team grid like last year\'s, standings and lane stats.</div><div class="row2"><button class="primary" data-act="xlsx">Download Excel</button><button data-act="bkcsv">Backup (CSV)</button><button data-act="bkjson">Backup (full data)</button><button data-act="publish">Publish now</button><button class="danger" data-act="clearall">'+(armed==='clear'?'Tap again to erase all heats':'Erase all heats')+'</button></div></div>';
+}
+function render(){
+  var v=!judge?(tab==='standings'?standingsView():resultsView()):(tab==='enter'?enterView():tab==='standings'?standingsView():tab==='lanes'?lanesView():tab==='setup'?setupView():resultsView());
+  $('#root').innerHTML=head()+tabsHtml()+v;
+}
+
+/* ---- actions ---- */
+function saveHeat(){
+  var d=draft,rows=[],err='';
+  d.rows.forEach(function(r,i){
+    var team=r.team.trim(),tm=r.time.trim();
+    if(!team&&!tm&&r.st==='ok')return;
+    if(!team){err='Lane '+(i+1)+' needs a team name.';return}
+    var t=null;if(r.st==='ok'){t=parseT(tm);if(t==null){err='Lane '+(i+1)+' time is not valid. Use MM:SS:ff with ff from 00 to 59.';return}}
+    rows.push({lane:i+1,team:team,t:r.st==='ok'?t:null,st:r.st});
+  });
+  if(err){toast(err);return}
+  if(!rows.length){toast('Enter at least one lane.');return}
+  if(!d.type.trim()){toast('Choose an event.');return}
+  var type=d.type.trim();
+  if((S.types||[]).indexOf(type)<0){S.types=(S.types||[]).concat([type])}
+  var n=Math.max(1,parseInt(d.n,10)||1);
+  if(d.id){var h=S.heats.filter(function(x){return x.id===d.id})[0];h.n=n;h.type=type;h.rows=rows}
+  else{S.heats=S.heats||[];S.heats.push({id:'h'+Date.now().toString(36),n:n,type:type,ts:Date.now(),rows:rows})}
+  commit();draft=blankDraft(type);saveDraft();toast('Heat '+n+' saved');render();publish();
+}
+var pubChain=Promise.resolve();
+function publish(){pubChain=pubChain.then(doPublish);return pubChain}
+function doPublish(){
+  var tok=lsGet('dbrr-token');
+  if(!tok){status='Add your GitHub token in Setup. Until then results are saved on this device only.';render();return Promise.resolve()}
+  status='Publishing...';render();
+  var api='https://api.github.com/repos/'+REPO+'/contents/'+FILE,h={'Authorization':'Bearer '+tok,'Accept':'application/vnd.github+json'},rev=S.rev,body=JSON.stringify(S,null,1);
+  return fetch(api+'?ref='+BRANCH+'&t='+Date.now(),{headers:h,cache:'no-store'}).then(function(r){if(!r.ok)throw r.status;return r.json()}).then(function(j){
+    return fetch(api,{method:'PUT',headers:h,body:JSON.stringify({message:'Results rev '+rev,content:btoa(unescape(encodeURIComponent(body))),sha:j.sha,branch:BRANCH})});
+  }).then(function(r){if(!r.ok)throw r.status;pubRev=rev;dirty=S.rev>pubRev;status='Published '+new Date().toLocaleTimeString([], {hour:'numeric',minute:'2-digit'});render()}).catch(function(e){
+    status=(e===401||e===403)?'GitHub rejected the token. Check it in Setup.':'Could not publish. Results are kept on this device. Tap Publish now to retry.';render();
+  });
+}
+function loadRemote(){
+  return fetch(RAW+'?t='+Date.now(),{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(d){
+    if(!d||!d.heats)return;lastLoad=new Date();
+    if(judge){var l=lsGet('dbrr-state');if(l&&l.S&&l.rev>(d.rev||0)){S=l.S;dirty=true}else{S=d;dirty=false}pubRev=d.rev||0;render();return}
+    if(JSON.stringify(d)!==JSON.stringify(S)){S=d;pubRev=d.rev||0;render()}else render();
+  }).catch(function(){});
+}
+function exportXlsx(){
+  if(!window.XLSX){toast('Excel export could not load. Check the connection.');return}
+  var hs=heatsSorted(),data=[['Heat','Event','Lane','Team','Time (MM:SS:ff)','Seconds','Place in heat','Status']];
+  hs.forEach(function(h){var pl=placed(h.rows);h.rows.slice().sort(function(a,b){return a.lane-b.lane}).forEach(function(r){data.push([h.n,h.type,r.lane,r.team,fin(r)?fmtT(r.t):'',fin(r)?secs(r.t):'',pl.get(r)||'',fin(r)?'Finished':r.st])})});
+  var teams=teamNames().filter(function(t){return hs.some(function(h){return h.rows.some(function(r){return r.team===t})})});
+  var m1=[['Heat','Event'].concat(teams)],m2=[['Heat','Event'].concat(teams)];
+  hs.forEach(function(h){var a=[h.n,h.type],b=[h.n,h.type];teams.forEach(function(t){var r=h.rows.filter(function(x){return x.team===t})[0];a.push(r?(fin(r)?fmtT(r.t):r.st):'');b.push(r?r.lane:'')});m1.push(a);m2.push(b)});
+  var sd=[['Event','Rank','Team','Total (MM:SS:ff)','Total seconds','Runs','Of']];
+  standings().forEach(function(e){e.list.forEach(function(x){sd.push([e.type,x.rank||'',x.team,fmtT(x.total),secs(x.total),x.runs,e.runs])})});
+  var ls=laneStats(),ld=[['Lane','Runs','Wins','Avg place','Avg vs heat average (s)','Fastest time','Fastest event','Fastest team']];
+  ls.lanes.forEach(function(l){ld.push([l.lane,l.runs,l.wins,l.heatsCmp?Math.round(l.placeSum/l.heatsCmp*100)/100:'',l.heatsCmp?Math.round(l.dSum/l.heatsCmp*100)/100:'',l.best==null?'':fmtT(l.best),l.bestType,l.bestTeam])});
+  var wb=XLSX.utils.book_new();
+  [['Data',data,[8,16,6,28,16,10,12,10]],['Times by team',m1,[8,16]],['Lanes by team',m2,[8,16]],['Standings',sd,[16,6,28,16,12,6,6]],['Lane stats',ld,[6,6,6,10,22,14,16,24]]].forEach(function(x){
+    var ws=XLSX.utils.aoa_to_sheet(x[1]);ws['!cols']=x[2].map(function(w){return {wch:w}});XLSX.utils.book_append_sheet(wb,ws,x[0])});
+  var buf=XLSX.write(wb,{bookType:'xlsx',type:'array'});
+  var fn=(S.title||'race').replace(/[^\w]+/g,'-').replace(/^-|-$/g,'').toLowerCase()+'-'+(S.date||'results')+'.xlsx';
+  if(!dl){toast('Downloads are not available in this view.');return}
+  dl.save({filename:fn,data:buf}).then(function(){toast('Saved '+fn)}).catch(function(e){if(!e||e.code!=='declined')toast('Could not save the file.')});
+}
+
+function backup(kind){
+  if(!dl){toast('Downloads are not available in this view.');return}
+  var base=(S.title||'race').replace(/[^\w]+/g,'-').replace(/^-|-$/g,'').toLowerCase()+'-'+(S.date||'results')+'-backup-'+new Date().toTimeString().slice(0,5).replace(':',''),fn,data;
+  if(kind==='json'){fn=base+'.json';data=JSON.stringify(S,null,1)}
+  else{
+    var q=function(v){v=String(v==null?'':v);return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v},rows=[['Heat','Event','Lane','Team','Time (MM:SS:ff)','Seconds','Place in heat','Status']];
+    heatsSorted().forEach(function(h){var pl=placed(h.rows);h.rows.slice().sort(function(a,b){return a.lane-b.lane}).forEach(function(r){rows.push([h.n,h.type,r.lane,r.team,fin(r)?fmtT(r.t):'',fin(r)?secs(r.t):'',pl.get(r)||'',fin(r)?'Finished':r.st])})});
+    fn=base+'.csv';data=rows.map(function(r){return r.map(q).join(',')}).join('\n')+'\n';
+  }
+  dl.save({filename:fn,data:data}).then(function(){lsSet('dbrr-bk',(S.heats||[]).length);toast('Backup saved');render()}).catch(function(e){if(!e||e.code!=='declined')toast('Could not save the backup.')});
+}
+
+/* ---- events ---- */
+document.addEventListener('click',function(ev){
+  var b=ev.target.closest('[data-act]');if(!b)return;var a=b.dataset.act,id=b.dataset.id;
+  if(a==='tab'){tab=b.dataset.v;render()}
+  else if(a==='saveheat')saveHeat();
+  else if(a==='publish')publish();
+  else if(a==='xlsx')exportXlsx();
+  else if(a==='bkcsv')backup('csv');
+  else if(a==='bkjson')backup('json');
+  else if(a==='edit'){var h=S.heats.filter(function(x){return x.id===id})[0],rows=[];
+    for(var i=1;i<=S.lanes;i++){var r=h.rows.filter(function(x){return x.lane===i})[0];rows.push(r?{team:r.team,time:fin(r)?fmtT(r.t):'',st:r.st}:{team:'',time:'',st:'ok'})}
+    draft={id:h.id,n:h.n,type:h.type,rows:rows};saveDraft();tab='enter';render();window.scrollTo(0,0)}
+  else if(a==='canceledit'){draft=blankDraft();saveDraft();armed=null;render()}
+  else if(a==='delheat'){if(armed==='del'){armed=null;S.heats=S.heats.filter(function(x){return x.id!==id});commit();draft=blankDraft();saveDraft();tab='results';render();publish()}else arm('del')}
+  else if(a==='clearall'){if(armed==='clear'){armed=null;S.heats=[];commit();draft=blankDraft();saveDraft();render();publish()}else arm('clear')}
+});
+document.addEventListener('input',function(ev){
+  var el=ev.target,f=el.dataset&&el.dataset.f;if(!f)return;
+  if(f==='n'||f==='type')draft[f]=el.value;
+  else{var r=draft.rows[+el.dataset.i];r[f]=el.value}
+  saveDraft();
+});
+document.addEventListener('change',function(ev){
+  var el=ev.target,f=el.dataset&&el.dataset.f,k=el.dataset&&el.dataset.set;
+  if(el.dataset&&el.dataset.token){if(el.value.trim()){lsSet('dbrr-token',el.value.trim());toast('Token saved on this device');render()}return}
+  if(el.dataset&&el.dataset.flt){if(el.dataset.flt==='heat')fHeat=el.value;else fTeam=el.value;render();return}
+  if(f==='time'){var t=parseT(el.value);if(el.value.trim()&&t==null)el.setAttribute('aria-invalid','true');else{el.removeAttribute('aria-invalid');if(t!=null){el.value=fmtT(t);draft.rows[+el.dataset.i].time=el.value;saveDraft()}}}
+  else if(f==='st'){draft.rows[+el.dataset.i].st=el.value;saveDraft()}
+  else if(k){
+    if(k==='types'||k==='roster')S[k]=el.value.split('\n').map(function(s){return s.trim()}).filter(Boolean);
+    else if(k==='lanes'){S.lanes=+el.value;draft=blankDraft(draft.type);saveDraft()}
+    else S[k]=el.value;
+    commit();render();
+  }
+});
+render();
+window.addEventListener('hashchange',function(){location.reload()});
+loadRemote();
+if(!judge)setInterval(loadRemote,30000);
+})();
+</script>
+</body></html>
