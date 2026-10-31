@@ -1,6 +1,6 @@
 {
  "v": 2,
- "rev": 5,
+ "rev": 6,
  "title": "Halloween Howl 2026",
  "date": "2026-11-01",
  "lanes": 4,
@@ -183,5 +183,38 @@
    ]
   }
  ],
- "heats": []
+ "heats": [
+  {
+   "id": "hmvwzf0qr",
+   "n": 1,
+   "type": "500 Qual",
+   "ts": 1793486267523,
+   "rows": [
+    {
+     "lane": 1,
+     "team": "DM1",
+     "t": 8543,
+     "st": "ok"
+    },
+    {
+     "lane": 2,
+     "team": "GGD",
+     "t": 4914,
+     "st": "ok"
+    },
+    {
+     "lane": 3,
+     "team": "Rose City",
+     "t": 12178,
+     "st": "ok"
+    },
+    {
+     "lane": 4,
+     "team": "KP1",
+     "t": 4944,
+     "st": "ok"
+    }
+   ]
+  }
+ ]
 }
