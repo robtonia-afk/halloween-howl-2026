@@ -88,7 +88,7 @@ h3{font-size:22px}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script id="app">
 (function(){
-var REPO='robtonia-afk/halloween-howl-2026',BRANCH='main',FILE='data.json',RAW='https://raw.githubusercontent.com/'+REPO+'/'+BRANCH+'/'+FILE;
+var REPO='robtonia-afk/halloween-howl-2026',BRANCH='main',FILE='data.json',RAW=FILE;
 var FR=60; /* the last two digits of a time are sixtieths of a second */
 var $=function(s){return document.querySelector(s)};
 var esc=function(s){return String(s==null?'':s).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})};
@@ -301,14 +301,14 @@ function doPublish(){
   var api='https://api.github.com/repos/'+REPO+'/contents/'+FILE,h={'Authorization':'Bearer '+tok,'Accept':'application/vnd.github+json'},rev=S.rev,body=JSON.stringify(S,null,1);
   return fetch(api+'?ref='+BRANCH+'&t='+Date.now(),{headers:h,cache:'no-store'}).then(function(r){if(!r.ok)throw r.status;return r.json()}).then(function(j){
     return fetch(api,{method:'PUT',headers:h,body:JSON.stringify({message:'Results rev '+rev,content:btoa(unescape(encodeURIComponent(body))),sha:j.sha,branch:BRANCH})});
-  }).then(function(r){if(!r.ok)throw r.status;pubRev=rev;dirty=S.rev>pubRev;status='Published '+new Date().toLocaleTimeString([], {hour:'numeric',minute:'2-digit'});render()}).catch(function(e){
+  }).then(function(r){if(!r.ok)throw r.status;pubRev=rev;lsSet('dbrr-pub',rev);dirty=S.rev>pubRev;status='Published '+new Date().toLocaleTimeString([], {hour:'numeric',minute:'2-digit'});render()}).catch(function(e){
     status=(e===401||e===403)?'GitHub rejected the token. Check it in Setup.':'Could not publish. Results are kept on this device. Tap Publish now to retry.';render();
   });
 }
 function loadRemote(){
   return fetch(RAW+'?t='+Date.now(),{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(d){
     if(!d||!d.heats)return;lastLoad=new Date();
-    if(judge){var l=lsGet('dbrr-state');if(l&&l.S&&l.rev>(d.rev||0)){S=l.S;dirty=true}else{S=d;dirty=false}pubRev=d.rev||0;render();return}
+    if(judge){var l=lsGet('dbrr-state'),pr=Math.max(d.rev||0,lsGet('dbrr-pub')||0);if(l&&l.S&&l.rev>(d.rev||0)){S=l.S}else{S=d}pubRev=pr;dirty=S.rev>pr;render();return}
     if(JSON.stringify(d)!==JSON.stringify(S)){S=d;pubRev=d.rev||0;render()}else render();
   }).catch(function(){});
 }
