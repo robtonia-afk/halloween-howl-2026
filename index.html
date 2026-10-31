@@ -322,7 +322,7 @@ function doPublish(){
 function loadRemote(){
   return fetch(RAW+'?t='+Date.now(),{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(d){
     if(!d||!d.heats)return;lastLoad=new Date();
-    if(judge){var l=lsGet('dbrr-state'),pr=Math.max(d.rev||0,lsGet('dbrr-pub')||0);if(l&&l.S&&l.rev>(d.rev||0)){S=l.S}else{S=d}pubRev=pr;dirty=S.rev>pr;if(!draft.id&&!draft.rows.some(function(r){return r.team||r.time.trim()}))draft=blankDraft(draft.type);saveDraft();render();return}
+    if(judge){var l=lsGet('dbrr-state'),pr=Math.max(d.rev||0,lsGet('dbrr-pub')||0);if(l&&l.S&&l.rev>(d.rev||0)){S=l.S}else{S=d}pubRev=pr;dirty=S.rev>pr;if(!draft.touched)draft=blankDraft(draft.type);saveDraft();render();return}
     if(JSON.stringify(d)!==JSON.stringify(S)){S=d;pubRev=d.rev||0;render()}else render();
   }).catch(function(){});
 }
