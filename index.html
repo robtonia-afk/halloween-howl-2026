@@ -84,7 +84,7 @@ h3{font-size:22px}
 </style></head><body>
 <div id="root"></div>
 <div id="toast" hidden></div>
-<script id="state" type="application/json">{"v":2,"rev":0,"title":"Halloween Howl 2026","date":"2026-11-01","lanes":4,"types":["500 Qual","Novice Qual","Backpaddle","1000","Novice Final","Mixed Final"],"roster":["KP Dragons","Ripple Effect","Portland Renegades","SFHKERS","Alameda 1","Dieselfish","OPD Wok'n Deading","Oakland Renegades","South Boo Synergy","Dragon Hella Max","Summon the Dragon","Ba Ba ba ba ba ba nanna","Bad Zero","Alameda 2"],"heats":[]}</script>
+<script id="state" type="application/json">{"v":2,"rev":5,"title":"Halloween Howl 2026","date":"2026-11-01","lanes":4,"types":["500 Qual","Backpaddle","1000","Mixed Final"],"roster":["ADF","Dieselfish","DM1","DM2","GGD","KP1","KP2","OPD","Renegades","Ripple","Rose City","Rough Riders","SJSU","South Bay","STD"],"schedule":[{"n":1,"start":"8:30 AM","type":"500 Qual","lanes":["DM1","GGD","Rose City","KP1"]},{"n":2,"start":"8:55 AM","type":"500 Qual","lanes":["STD","Ripple","SJSU","ADF"]},{"n":3,"start":"9:20 AM","type":"500 Qual","lanes":["KP2","DM2","OPD",""]},{"n":4,"start":"9:45 AM","type":"500 Qual","lanes":["South Bay","Dieselfish","Rough Riders","Renegades"]},{"n":5,"start":"10:10 AM","type":"500 Qual","lanes":["KP1","Rose City","GGD","DM1"]},{"n":6,"start":"10:35 AM","type":"500 Qual","lanes":["ADF","SJSU","Ripple","Rough Riders"]},{"n":7,"start":"11:00 AM","type":"500 Qual","lanes":["Renegades","DM2","Dieselfish","South Bay"]},{"n":8,"start":"11:25 AM","type":"500 Qual","lanes":["OPD","KP2","STD",""]},{"n":9,"start":"12:20 PM","type":"Backpaddle","lanes":["Rough Riders","Renegades","South Bay","DM1"]},{"n":10,"start":"12:45 PM","type":"Backpaddle","lanes":["STD","KP2","ADF","SJSU"]},{"n":11,"start":"1:10 PM","type":"Backpaddle","lanes":["Dieselfish","DM2","Ripple","Rose City"]},{"n":12,"start":"1:35 PM","type":"Backpaddle","lanes":["GGD","OPD","KP1",""]},{"n":13,"start":"2:00 PM","type":"1000","lanes":["","","",""]},{"n":14,"start":"2:45 PM","type":"Mixed Final","lanes":["","","",""]}],"heats":[]}</script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
 <script id="app">
 (function(){
@@ -161,10 +161,13 @@ function arm(k){armed=k;clearTimeout(arm.t);arm.t=setTimeout(function(){armed=nu
 
 /* ---- draft heat (the entry form) ---- */
 var draft=lsGet('dbrr-draft');
+function sched(n){return (S.schedule||[]).filter(function(x){return x.n===n})[0]}
 function blankDraft(keepType){
   var n=0;(S.heats||[]).forEach(function(h){if(h.n>n)n=h.n});
-  var rows=[];for(var i=0;i<S.lanes;i++)rows.push({team:'',time:'',st:'ok'});
-  return {id:null,n:n+1,type:keepType||(S.types&&S.types[0])||'',rows:rows};
+  var dn={};(S.heats||[]).forEach(function(h){dn[h.n]=1});var nx=null;(S.schedule||[]).forEach(function(x){if(!dn[x.n]&&(nx==null||x.n<nx))nx=x.n});
+  var num=nx!=null?nx:n+1,sc=sched(num);
+  var rows=[];for(var i=0;i<S.lanes;i++)rows.push({team:sc&&sc.lanes[i]||'',time:'',st:'ok'});
+  return {id:null,n:num,type:sc?sc.type:(keepType||(S.types&&S.types[0])||''),rows:rows};
 }
 if(!draft||draft.rows.length!==S.lanes)draft=blankDraft();
 function saveDraft(){lsSet('dbrr-draft',draft)}
@@ -196,7 +199,7 @@ function enterView(){
       '<div class="f2"><input class="time" data-f="time" data-i="'+i+'" value="'+esc(r.time)+'" placeholder="MM:SS:ff" inputmode="numeric" aria-label="Lane '+(i+1)+' time"><select data-f="st" data-i="'+i+'" aria-label="Lane '+(i+1)+' status">'+[['ok','Finished'],['DNS','DNS'],['DNF','DNF'],['DQ','DQ']].map(function(o){return '<option value="'+o[0]+'"'+(r.st===o[0]?' selected':'')+'>'+o[1]+'</option>'}).join('')+'</select></div></div>';
   }).join('');
   return '<div class="panel"><div class="hrow"><h3>'+(ed?'Editing heat '+d.n:'New heat')+'</h3>'+(ed?'<span class="tag">Editing</span>':'')+'</div>'+
-    '<div class="grid2"><label>Heat number<input type="number" min="1" data-f="n" value="'+d.n+'" inputmode="numeric"></label><label>Event<input data-f="type" list="types" value="'+esc(d.type)+'"></label></div>'+
+    (sched(d.n)?'<div class="note">Scheduled '+esc(sched(d.n).start)+' - '+esc(sched(d.n).type)+'. Teams are filled in from the race grid.</div>':'')+'<div class="grid2"><label>Heat number<input type="number" min="1" data-f="n" value="'+d.n+'" inputmode="numeric"></label><label>Event<input data-f="type" list="types" value="'+esc(d.type)+'"></label></div>'+
     rows+'<div class="note">Type a time as 030552 or 03:05:52. The last two digits are sixtieths of a second (00 to 59). Leave a lane empty if no boat ran in it.</div>'+
     '<button class="primary big" data-act="saveheat">'+(ed?'Save changes':'Save heat')+'</button>'+
     (ed?'<div class="row2"><button class="small" data-act="canceledit">Cancel editing</button><button class="small danger" data-act="delheat" data-id="'+d.id+'">'+(armed==='del'?'Tap again to delete this heat':'Delete this heat')+'</button></div>':'')+
@@ -308,7 +311,7 @@ function doPublish(){
 function loadRemote(){
   return fetch(RAW+'?t='+Date.now(),{cache:'no-store'}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(d){
     if(!d||!d.heats)return;lastLoad=new Date();
-    if(judge){var l=lsGet('dbrr-state'),pr=Math.max(d.rev||0,lsGet('dbrr-pub')||0);if(l&&l.S&&l.rev>(d.rev||0)){S=l.S}else{S=d}pubRev=pr;dirty=S.rev>pr;render();return}
+    if(judge){var l=lsGet('dbrr-state'),pr=Math.max(d.rev||0,lsGet('dbrr-pub')||0);if(l&&l.S&&l.rev>(d.rev||0)){S=l.S}else{S=d}pubRev=pr;dirty=S.rev>pr;if(!draft.id&&!draft.rows.some(function(r){return r.team||r.time.trim()}))draft=blankDraft(draft.type);saveDraft();render();return}
     if(JSON.stringify(d)!==JSON.stringify(S)){S=d;pubRev=d.rev||0;render()}else render();
   }).catch(function(){});
 }
@@ -370,6 +373,7 @@ document.addEventListener('change',function(ev){
   var el=ev.target,f=el.dataset&&el.dataset.f,k=el.dataset&&el.dataset.set;
   if(el.dataset&&el.dataset.token){if(el.value.trim()){lsSet('dbrr-token',el.value.trim());toast('Token saved on this device');render()}return}
   if(el.dataset&&el.dataset.flt){if(el.dataset.flt==='heat')fHeat=el.value;else fTeam=el.value;render();return}
+  if(f==='n'&&!draft.id){var sc=sched(parseInt(el.value,10));if(sc&&!draft.rows.some(function(r){return r.time.trim()})){draft.type=sc.type;draft.rows.forEach(function(r,i){r.team=sc.lanes[i]||''})}saveDraft();render();return}
   if(f==='time'){var t=parseT(el.value);if(el.value.trim()&&t==null)el.setAttribute('aria-invalid','true');else{el.removeAttribute('aria-invalid');if(t!=null){el.value=fmtT(t);draft.rows[+el.dataset.i].time=el.value;saveDraft()}}}
   else if(f==='st'){draft.rows[+el.dataset.i].st=el.value;saveDraft()}
   else if(k){
