@@ -1,6 +1,6 @@
 {
  "v": 2,
- "rev": 7,
+ "rev": 8,
  "title": "Halloween Howl 2026",
  "date": "2026-11-01",
  "lanes": 4,
@@ -212,6 +212,38 @@
      "lane": 4,
      "team": "KP1",
      "t": 4944,
+     "st": "ok"
+    }
+   ]
+  },
+  {
+   "id": "hmvx04gjd",
+   "n": 2,
+   "type": "500 Qual",
+   "ts": 1793487454393,
+   "rows": [
+    {
+     "lane": 1,
+     "team": "STD",
+     "t": 5003,
+     "st": "ok"
+    },
+    {
+     "lane": 2,
+     "team": "Ripple",
+     "t": 8517,
+     "st": "ok"
+    },
+    {
+     "lane": 3,
+     "team": "SJSU",
+     "t": 17121,
+     "st": "ok"
+    },
+    {
+     "lane": 4,
+     "team": "ADF",
+     "t": 13885,
      "st": "ok"
     }
    ]
