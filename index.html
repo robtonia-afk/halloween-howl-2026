@@ -162,6 +162,17 @@ function arm(k){armed=k;clearTimeout(arm.t);arm.t=setTimeout(function(){armed=nu
 /* ---- draft heat (the entry form) ---- */
 var draft=lsGet('dbrr-draft');
 function sched(n){return (S.schedule||[]).filter(function(x){return x.n===n})[0]}
+function draftFor(n){
+  var h=heatsSorted().filter(function(x){return x.n===n}).pop(),rows=[],i;
+  if(h){for(i=1;i<=S.lanes;i++){var r=h.rows.filter(function(x){return x.lane===i})[0];rows.push(r?{team:r.team,time:fin(r)?fmtT(r.t):'',st:r.st}:{team:'',time:'',st:'ok'})}return {id:h.id,n:h.n,type:h.type,rows:rows}}
+  var sc=sched(n);for(i=0;i<S.lanes;i++)rows.push({team:sc&&sc.lanes[i]||'',time:'',st:'ok'});
+  return {id:null,n:n,type:sc?sc.type:draft.type,rows:rows};
+}
+function gotoHeat(n){
+  if(!(n>=1))return;
+  if(draft.touched&&armed!=='goto'){toast('This heat has changes you have not saved. Do that again to discard them.');arm('goto');return}
+  armed=null;draft=draftFor(n);saveDraft();render();window.scrollTo(0,0);
+}
 function blankDraft(keepType){
   var n=0;(S.heats||[]).forEach(function(h){if(h.n>n)n=h.n});
   var dn={};(S.heats||[]).forEach(function(h){dn[h.n]=1});var nx=null;(S.schedule||[]).forEach(function(x){if(!dn[x.n]&&(nx==null||x.n<nx))nx=x.n});
@@ -199,7 +210,7 @@ function enterView(){
       '<div class="f2"><input class="time" data-f="time" data-i="'+i+'" value="'+esc(r.time)+'" placeholder="MM:SS:ff" inputmode="numeric" aria-label="Lane '+(i+1)+' time"><select data-f="st" data-i="'+i+'" aria-label="Lane '+(i+1)+' status">'+[['ok','Finished'],['DNS','DNS'],['DNF','DNF'],['DQ','DQ']].map(function(o){return '<option value="'+o[0]+'"'+(r.st===o[0]?' selected':'')+'>'+o[1]+'</option>'}).join('')+'</select></div></div>';
   }).join('');
   return '<div class="panel"><div class="hrow"><h3>'+(ed?'Editing heat '+d.n:'New heat')+'</h3>'+(ed?'<span class="tag">Editing</span>':'')+'</div>'+
-    (sched(d.n)?'<div class="note">Scheduled '+esc(sched(d.n).start)+' - '+esc(sched(d.n).type)+'. Teams are filled in from the race grid.</div>':'')+'<div class="grid2"><label>Heat number<input type="number" min="1" data-f="n" value="'+d.n+'" inputmode="numeric"></label><label>Event<input data-f="type" list="types" value="'+esc(d.type)+'"></label></div>'+
+    (ed?'<div class="note">This heat is already saved. Change anything and tap Save changes.</div>':'')+(sched(d.n)?'<div class="note">Scheduled '+esc(sched(d.n).start)+' - '+esc(sched(d.n).type)+'. Teams are filled in from the race grid.</div>':'')+'<div class="grid2"><label>Heat number<input type="number" min="1" data-f="n" value="'+d.n+'" inputmode="numeric"></label><label>Event<input data-f="type" list="types" value="'+esc(d.type)+'"></label></div><div class="row2"><button class="small" data-act="hprev">Previous heat</button><button class="small" data-act="hnext">Next heat</button></div>'+
     rows+'<div class="note">Type a time as 030552 or 03:05:52. The last two digits are sixtieths of a second (00 to 59). Leave a lane empty if no boat ran in it.</div>'+
     '<button class="primary big" data-act="saveheat">'+(ed?'Save changes':'Save heat')+'</button>'+
     (ed?'<div class="row2"><button class="small" data-act="canceledit">Cancel editing</button><button class="small danger" data-act="delheat" data-id="'+d.id+'">'+(armed==='del'?'Tap again to delete this heat':'Delete this heat')+'</button></div>':'')+
@@ -356,6 +367,8 @@ document.addEventListener('click',function(ev){
   else if(a==='xlsx')exportXlsx();
   else if(a==='bkcsv')backup('csv');
   else if(a==='bkjson')backup('json');
+  else if(a==='hprev')gotoHeat(draft.n-1);
+  else if(a==='hnext')gotoHeat(draft.n+1);
   else if(a==='edit'){var h=S.heats.filter(function(x){return x.id===id})[0],rows=[];
     for(var i=1;i<=S.lanes;i++){var r=h.rows.filter(function(x){return x.lane===i})[0];rows.push(r?{team:r.team,time:fin(r)?fmtT(r.t):'',st:r.st}:{team:'',time:'',st:'ok'})}
     draft={id:h.id,n:h.n,type:h.type,rows:rows};saveDraft();tab='enter';render();window.scrollTo(0,0)}
@@ -365,15 +378,16 @@ document.addEventListener('click',function(ev){
 });
 document.addEventListener('input',function(ev){
   var el=ev.target,f=el.dataset&&el.dataset.f;if(!f)return;
-  if(f==='n'||f==='type')draft[f]=el.value;
+  if(f==='n')return;
+  if(f==='type')draft.type=el.value;
   else{var r=draft.rows[+el.dataset.i];r[f]=el.value}
-  saveDraft();
+  draft.touched=true;saveDraft();
 });
 document.addEventListener('change',function(ev){
   var el=ev.target,f=el.dataset&&el.dataset.f,k=el.dataset&&el.dataset.set;
   if(el.dataset&&el.dataset.token){if(el.value.trim()){lsSet('dbrr-token',el.value.trim());toast('Token saved on this device');render()}return}
   if(el.dataset&&el.dataset.flt){if(el.dataset.flt==='heat')fHeat=el.value;else fTeam=el.value;render();return}
-  if(f==='n'&&!draft.id){var sc=sched(parseInt(el.value,10));if(sc&&!draft.rows.some(function(r){return r.time.trim()})){draft.type=sc.type;draft.rows.forEach(function(r,i){r.team=sc.lanes[i]||''})}saveDraft();render();return}
+  if(f==='n'){var nn=parseInt(el.value,10);if(nn>=1&&nn!==draft.n)gotoHeat(nn);else render();return}
   if(f==='time'){var t=parseT(el.value);if(el.value.trim()&&t==null)el.setAttribute('aria-invalid','true');else{el.removeAttribute('aria-invalid');if(t!=null){el.value=fmtT(t);draft.rows[+el.dataset.i].time=el.value;saveDraft()}}}
   else if(f==='st'){draft.rows[+el.dataset.i].st=el.value;saveDraft()}
   else if(k){
