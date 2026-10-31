@@ -238,8 +238,8 @@ function resultsView(){
   var hs=all.filter(function(h){return (!fHeat||h.id===fHeat)&&(!fTeam||h.rows.some(function(r){return sameTeam(r,fTeam)}))});
   var cards=hs.length?hs.map(function(h){
     var pl=placed(h.rows),rows=h.rows.slice().sort(function(a,b){var pa=pl.get(a),pb=pl.get(b);if(pa&&pb)return pa-pb||a.lane-b.lane;if(pa)return -1;if(pb)return 1;return a.lane-b.lane});
-    var body=rows.map(function(r){var p=pl.get(r);return '<tr'+(fTeam&&sameTeam(r,fTeam)?' class="me"':'')+'><td>'+badge(p)+'</td><td><span class="dot" style="background:'+LC[(r.lane-1)%6]+'"></span>Lane '+r.lane+'</td><td>'+esc(r.team)+'</td><td class="t r">'+(fin(r)?fmtT(r.t):'<span style="color:var(--stop)">'+r.st+'</span>')+'</td></tr>'}).join('');
-    return '<div class="panel"><div class="hrow"><h3>Heat '+h.n+' <span class="tag">'+esc(h.type)+'</span></h3>'+(judge?'<button class="small" data-act="edit" data-id="'+h.id+'">Edit</button>':'')+'</div><div class="wrap"><table class="table"><tr><th>Pl</th><th>Lane</th><th>Team</th><th class="r">Time</th></tr>'+body+'</table></div></div>';
+    var body=rows.map(function(r){var p=pl.get(r);return '<tr'+(fTeam&&sameTeam(r,fTeam)?' class="me"':'')+'><td>'+badge(p)+'</td><td>'+esc(r.team)+'</td><td><span class="dot" style="background:'+LC[(r.lane-1)%6]+'"></span>Lane '+r.lane+'</td><td class="t r">'+(fin(r)?fmtT(r.t):'<span style="color:var(--stop)">'+r.st+'</span>')+'</td></tr>'}).join('');
+    return '<div class="panel"><div class="hrow"><h3>Heat '+h.n+' <span class="tag">'+esc(h.type)+'</span></h3>'+(judge?'<button class="small" data-act="edit" data-id="'+h.id+'">Edit</button>':'')+'</div><div class="wrap"><table class="table"><tr><th>Pl</th><th>Team</th><th>Lane</th><th class="r">Time</th></tr>'+body+'</table></div></div>';
   }).join(''):'<div class="panel empty">No heats match those choices.</div>';
   return bar+(fTeam?teamSummary(teams.filter(function(t){return t.toLowerCase()===fTeam.toLowerCase()})[0]):'')+cards;
 }
