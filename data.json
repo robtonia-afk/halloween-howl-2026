@@ -1,6 +1,6 @@
 {
  "v": 2,
- "rev": 24,
+ "rev": 25,
  "title": "Halloween Howl 2026",
  "date": "2026-11-01",
  "lanes": 4,
@@ -310,6 +310,32 @@
      "lane": 4,
      "team": "Dragonmax 1",
      "t": 11946,
+     "st": "ok"
+    }
+   ]
+  },
+  {
+   "id": "hmvy6ebgd",
+   "n": 6,
+   "type": "500 Qual",
+   "ts": 1793558458237,
+   "rows": [
+    {
+     "lane": 1,
+     "team": "Alameda Dragon Flyers",
+     "t": 11139,
+     "st": "ok"
+    },
+    {
+     "lane": 3,
+     "team": "Ripple Effect - Let's Get Jacked",
+     "t": 10824,
+     "st": "ok"
+    },
+    {
+     "lane": 4,
+     "team": "Rough Riders",
+     "t": 13617,
      "st": "ok"
     }
    ]
