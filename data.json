@@ -1,6 +1,6 @@
 {
  "v": 2,
- "rev": 31,
+ "rev": 32,
  "title": "Halloween Howl 2026",
  "date": "2026-11-01",
  "lanes": 4,
@@ -458,6 +458,32 @@
      "lane": 3,
      "team": "KP Dragons Blueberry",
      "t": 11368,
+     "st": "ok"
+    }
+   ]
+  },
+  {
+   "id": "hmvybrfog",
+   "n": 11,
+   "type": "Backpaddle",
+   "ts": 1793567468320,
+   "rows": [
+    {
+     "lane": 1,
+     "team": "Rough Riders",
+     "t": 3459,
+     "st": "ok"
+    },
+    {
+     "lane": 3,
+     "team": "South Boo! Synergy",
+     "t": 2955,
+     "st": "ok"
+    },
+    {
+     "lane": 4,
+     "team": "Oakland Renegades",
+     "t": 2149,
      "st": "ok"
     }
    ]
