@@ -1,6 +1,6 @@
 {
  "v": 2,
- "rev": 33,
+ "rev": 34,
  "title": "Halloween Howl 2026",
  "date": "2026-11-01",
  "lanes": 4,
@@ -510,6 +510,32 @@
      "lane": 4,
      "team": "SJSU Doggy Paddle",
      "t": 3046,
+     "st": "ok"
+    }
+   ]
+  },
+  {
+   "id": "hmvyd3aq4",
+   "n": 13,
+   "type": "Backpaddle",
+   "ts": 1793569701388,
+   "rows": [
+    {
+     "lane": 1,
+     "team": "Dieselfish",
+     "t": 3919,
+     "st": "ok"
+    },
+    {
+     "lane": 3,
+     "team": "Ripple Effect - Let's Get Jacked",
+     "t": 3013,
+     "st": "ok"
+    },
+    {
+     "lane": 4,
+     "team": "Rose City Renegades",
+     "t": 2869,
      "st": "ok"
     }
    ]
