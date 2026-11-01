@@ -1,6 +1,6 @@
 {
  "v": 2,
- "rev": 19,
+ "rev": 20,
  "title": "Halloween Howl 2026",
  "date": "2026-11-01",
  "lanes": 4,
@@ -231,7 +231,7 @@
     {
      "lane": 2,
      "team": "Ripple Effect - Let's Get Jacked",
-     "t": 10067,
+     "t": 11207,
      "st": "ok"
     },
     {
