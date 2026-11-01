@@ -1,6 +1,6 @@
 {
  "v": 2,
- "rev": 36,
+ "rev": 37,
  "title": "Halloween Howl 2026",
  "date": "2026-11-01",
  "lanes": 4,
@@ -606,6 +606,48 @@
      "lane": 0,
      "team": "DragonMax 2",
      "t": 29713.2,
+     "st": "ok"
+    },
+    {
+     "lane": 0,
+     "team": "KP Dragons Broccoli",
+     "t": 25134,
+     "st": "ok"
+    },
+    {
+     "lane": 0,
+     "team": "Rose City Renegades",
+     "t": 25897.2,
+     "st": "ok"
+    },
+    {
+     "lane": 0,
+     "team": "Rough Riders",
+     "t": 27942.6,
+     "st": "ok"
+    },
+    {
+     "lane": 0,
+     "team": "Summon the Dragon",
+     "t": 28025.4,
+     "st": "ok"
+    },
+    {
+     "lane": 0,
+     "team": "Alameda Dragon Flyers",
+     "t": 25128.6,
+     "st": "ok"
+    },
+    {
+     "lane": 0,
+     "team": "Oyster Point Giants",
+     "t": 27951,
+     "st": "ok"
+    },
+    {
+     "lane": 0,
+     "team": "SJSU Doggy Paddle",
+     "t": 25870.8,
      "st": "ok"
     }
    ],
