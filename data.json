@@ -1,6 +1,6 @@
 {
  "v": 2,
- "rev": 35,
+ "rev": 36,
  "title": "Halloween Howl 2026",
  "date": "2026-11-01",
  "lanes": 4,
@@ -565,6 +565,51 @@
      "st": "ok"
     }
    ]
+  },
+  {
+   "id": "hmvyfogwn",
+   "n": 15,
+   "type": "1000",
+   "ts": 1793574048407,
+   "rows": [
+    {
+     "lane": 0,
+     "team": "Golden HK Dragons",
+     "t": 26874,
+     "st": "ok"
+    },
+    {
+     "lane": 0,
+     "team": "South Boo! Synergy",
+     "t": 21918.6,
+     "st": "ok"
+    },
+    {
+     "lane": 0,
+     "team": "Ripple Effect - Let's Get Jacked",
+     "t": 24148.2,
+     "st": "ok"
+    },
+    {
+     "lane": 0,
+     "team": "DragonMax 1",
+     "t": 25980,
+     "st": "ok"
+    },
+    {
+     "lane": 0,
+     "team": "Dieselfish",
+     "t": 25468.2,
+     "st": "ok"
+    },
+    {
+     "lane": 0,
+     "team": "DragonMax 2",
+     "t": 29713.2,
+     "st": "ok"
+    }
+   ],
+   "free": 15
   }
  ],
  "mig": 1
