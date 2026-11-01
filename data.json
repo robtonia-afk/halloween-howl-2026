@@ -1,6 +1,6 @@
 {
  "v": 2,
- "rev": 30,
+ "rev": 31,
  "title": "Halloween Howl 2026",
  "date": "2026-11-01",
  "lanes": 4,
@@ -438,6 +438,26 @@
      "lane": 4,
      "team": "SJSU Doggy Paddle",
      "t": 11097,
+     "st": "ok"
+    }
+   ]
+  },
+  {
+   "id": "hmvyb0uey",
+   "n": 10,
+   "type": "500 Qual",
+   "ts": 1793566227706,
+   "rows": [
+    {
+     "lane": 1,
+     "team": "DragonMax 2",
+     "t": 12188,
+     "st": "ok"
+    },
+    {
+     "lane": 3,
+     "team": "KP Dragons Blueberry",
+     "t": 11368,
      "st": "ok"
     }
    ]
