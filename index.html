@@ -78,6 +78,12 @@ h3{font-size:22px}
 .stat b{display:block;font:700 24px/1.1 var(--disp)} .stat span{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-weight:600}
 .dot{display:inline-block;width:12px;height:12px;border-radius:50%;margin-right:6px;vertical-align:-1px}
 .wrap{overflow-x:auto}
+.sh{all:unset;box-sizing:border-box;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;cursor:pointer;width:100%;-webkit-tap-highlight-color:transparent}
+.sh:focus-visible{outline:2px solid var(--muted);outline-offset:4px;border-radius:6px}
+.sh h3{margin:0}
+.sh .chev{display:inline-block;width:14px;font-size:12px;color:var(--muted);transition:transform .15s}
+.sh.shut .chev{transform:rotate(-90deg)}
+.sh .note{margin-left:auto}
 .hrow{display:flex;justify-content:space-between;align-items:baseline;gap:10px;flex-wrap:wrap}
 .tag{font:600 12px var(--body);letter-spacing:.08em;text-transform:uppercase;color:var(--accent);border:1px solid var(--accent);border-radius:4px;padding:2px 6px}
 .empty{color:var(--muted);text-align:center;padding:28px 12px}
@@ -117,7 +123,7 @@ var loc=lsGet('dbrr-state');
 if(judge&&loc&&loc.S&&loc.rev>pubRev){S=fixNames(loc.S);dirty=true}
 var tab=judge?'enter':'results',armed=null,status='';
 var dl={save:function(o){return new Promise(function(res){var b=o.data instanceof ArrayBuffer||typeof o.data==='string'?new Blob([o.data]):o.data,u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=o.filename;document.body.appendChild(a);a.click();setTimeout(function(){URL.revokeObjectURL(u);a.remove()},1000);res()})}};
-var fHeat='',fTeam='';
+var fHeat='',fTeam='',shut=lsGet('dbrr-shut')||{};
 var LC=['var(--l1)','var(--l2)','var(--l3)','var(--l4)','var(--l5)','var(--l6)'];
 function commit(){S.rev=(S.rev||0)+1;lsSet('dbrr-state',{rev:S.rev,S:S});dirty=S.rev>pubRev}
 
@@ -277,7 +283,8 @@ function standingsView(){
       var cells='';for(var i=0;i<e.runs;i++){var t=x.laps[i];cells+='<td class="t r runcell">'+(t==null?'<span class="note">–</span>':fmtT(t)+fastB(e.type,t))+'</td>'}
       return '<tr><td>'+badge(x.rank||0)+'</td><td>'+esc(x.team)+(x.full?'':' <span class="note">'+x.runs+' of '+e.runs+' runs</span>')+'</td>'+cells+(e.runs>1?'<td class="t r">'+fmtT(x.total)+'</td>':'')+'</tr>';
     }).join('');
-    return '<div class="panel"><div class="hrow"><h3>'+esc(e.type)+'</h3><span class="note">'+(e.runs>1?'Ranked by total of '+e.runs+' runs':'Single run')+'</span></div><div class="wrap"><table class="table"><tr><th>#</th><th>Team</th>'+heads+(e.runs>1?'<th class="r">Total</th>':'')+'</tr>'+body+'</table></div><div class="note">'+(e.runs>1?'The large medal is each team\'s place by total. The &#9889; badges mark the four fastest single times in this event so far.':'Medals show each team\'s place. The &#9889; badges mark the four fastest times.')+'</div></div>';
+    var sh=!!shut[e.type];
+    return '<div class="panel"><button class="sh'+(sh?' shut':'')+'" data-act="shut" data-v="'+esc(e.type)+'" aria-expanded="'+!sh+'"><span class="chev">&#9660;</span><h3>'+esc(e.type)+'</h3><span class="note">'+(e.runs>1?'Ranked by total of '+e.runs+' runs':'Single run')+'</span></button>'+(sh?'</div>':'<div class="wrap"><table class="table"><tr><th>#</th><th>Team</th>'+heads+(e.runs>1?'<th class="r">Total</th>':'')+'</tr>'+body+'</table></div><div class="note">'+(e.runs>1?'The large medal is each team\'s place by total. The &#9889; badges mark the four fastest single times in this event so far.':'Medals show each team\'s place. The &#9889; badges mark the four fastest times.')+'</div></div>');
   }).join('');
 }
 function lanesView(){
@@ -388,6 +395,7 @@ function backup(kind){
 document.addEventListener('click',function(ev){
   var b=ev.target.closest('[data-act]');if(!b)return;var a=b.dataset.act,id=b.dataset.id;
   if(a==='tab'){tab=b.dataset.v;render()}
+  else if(a==='shut'){var k=b.dataset.v;if(shut[k])delete shut[k];else shut[k]=1;lsSet('dbrr-shut',shut);render()}
   else if(a==='saveheat')saveHeat();
   else if(a==='publish')publish();
   else if(a==='xlsx')exportXlsx();
