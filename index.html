@@ -67,6 +67,9 @@ h3{font-size:22px}
 .runcell .badge{margin-left:6px;vertical-align:middle}
 .badge sup{font-size:12px;margin-left:1px;vertical-align:baseline;position:relative;top:-6px}
 .badge.b1{--bc:var(--gold);background:var(--gold)} .badge.b2{--bc:var(--silver);background:var(--silver)} .badge.b3{--bc:var(--bronze);background:var(--bronze)} .badge.b4{--bc:var(--muted);background:var(--muted)}
+.fb{display:inline-flex;align-items:center;justify-content:center;min-width:22px;height:22px;padding:0 5px;margin-left:6px;border-radius:6px;font:700 12px/1 var(--disp);color:#fff;background:var(--muted);vertical-align:middle;white-space:nowrap}
+.fb.f1{background:var(--gold)} .fb.f2{background:var(--silver)} .fb.f3{background:var(--bronze)}
+.fb:before{content:'\26A1';font-size:10px;margin-right:2px}
 .badge.none{background:transparent;color:var(--muted);box-shadow:0 0 0 2px var(--line)}
 .filters{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
 .table tr.me td{background:var(--hi)}
@@ -128,6 +131,12 @@ function placed(rows){
   var ok=rows.filter(fin).sort(function(a,b){return a.t-b.t}),m=new Map(),p=0,last=null;
   ok.forEach(function(r,i){if(r.t!==last){p=i+1;last=r.t}m.set(r,p)});return m;
 }
+var FAST=null;
+function fastMap(){
+  var by={};heatsSorted().forEach(function(h){h.rows.forEach(function(r){if(!fin(r))return;var a=by[h.type]=by[h.type]||[];if(a.indexOf(r.t)<0)a.push(r.t)})});
+  Object.keys(by).forEach(function(k){by[k]=by[k].sort(function(a,b){return a-b}).slice(0,4)});return by;
+}
+function fastB(type,t){var a=FAST&&FAST[type],i=a?a.indexOf(t):-1;return i<0?'':'<span class="fb f'+(i+1)+'" title="'+(i+1===1?'Fastest':'#'+(i+1)+' fastest')+' time in '+esc(type)+'" aria-label="#'+(i+1)+' fastest time in '+esc(type)+'">'+(i+1)+'</span>'}
 function standings(){
   var by={};
   heatsSorted().forEach(function(h){h.rows.forEach(function(r){
@@ -241,22 +250,20 @@ function resultsView(){
   var hs=all.filter(function(h){return (!fHeat||h.id===fHeat)&&(!fTeam||h.rows.some(function(r){return sameTeam(r,fTeam)}))});
   var cards=hs.length?hs.map(function(h){
     var pl=placed(h.rows),rows=h.rows.slice().sort(function(a,b){var pa=pl.get(a),pb=pl.get(b);if(pa&&pb)return pa-pb||a.lane-b.lane;if(pa)return -1;if(pb)return 1;return a.lane-b.lane});
-    var body=rows.map(function(r){var p=pl.get(r);return '<tr'+(fTeam&&sameTeam(r,fTeam)?' class="me"':'')+'><td>'+badge(p)+'</td><td>'+esc(r.team)+'</td><td><span class="dot" style="background:'+LC[(r.lane-1)%6]+'"></span>Lane '+r.lane+'</td><td class="t r">'+(fin(r)?fmtT(r.t):'<span style="color:var(--stop)">'+r.st+'</span>')+'</td></tr>'}).join('');
+    var body=rows.map(function(r){var p=pl.get(r);return '<tr'+(fTeam&&sameTeam(r,fTeam)?' class="me"':'')+'><td>'+badge(p)+'</td><td>'+esc(r.team)+'</td><td><span class="dot" style="background:'+LC[(r.lane-1)%6]+'"></span>Lane '+r.lane+'</td><td class="t r">'+(fin(r)?fmtT(r.t)+fastB(h.type,r.t):'<span style="color:var(--stop)">'+r.st+'</span>')+'</td></tr>'}).join('');
     return '<div class="panel"><div class="hrow"><h3>Heat '+h.n+' <span class="tag">'+esc(h.type)+'</span></h3>'+(judge?'<button class="small" data-act="edit" data-id="'+h.id+'">Edit</button>':'')+'</div><div class="wrap"><table class="table"><tr><th>Pl</th><th>Team</th><th>Lane</th><th class="r">Time</th></tr>'+body+'</table></div></div>';
-  }).join(''):'<div class="panel empty">No heats match those choices.</div>';
+  }).join('')+'<div class="note">The &#9889; badge marks the four fastest times in each event so far.</div>':'<div class="panel empty">No heats match those choices.</div>';
   return bar+(fTeam?teamSummary(teams.filter(function(t){return t.toLowerCase()===fTeam.toLowerCase()})[0]):'')+cards;
 }
 function standingsView(){
   var st=standings();if(!st.length)return '<div class="panel empty"><h2>No standings yet</h2><div>Standings add up each team\'s times within an event.</div></div>';
   return st.map(function(e){
-    var vals=[];e.list.forEach(function(x){x.laps.forEach(function(t){if(vals.indexOf(t)<0)vals.push(t)})});vals.sort(function(a,b){return a-b});
-    var rk=function(t){var i=vals.indexOf(t);return i>=0&&i<3?i+1:0};
     var heads='';for(var i=1;i<=e.runs;i++)heads+='<th class="r">'+(e.runs>1?'Run '+i:'Time')+'</th>';
     var body=e.list.map(function(x){
-      var cells='';for(var i=0;i<e.runs;i++){var t=x.laps[i];cells+='<td class="t r runcell">'+(t==null?'<span class="note">–</span>':fmtT(t)+(e.runs>1&&rk(t)?badge(rk(t),1):''))+'</td>'}
+      var cells='';for(var i=0;i<e.runs;i++){var t=x.laps[i];cells+='<td class="t r runcell">'+(t==null?'<span class="note">–</span>':fmtT(t)+fastB(e.type,t))+'</td>'}
       return '<tr><td>'+badge(x.rank||0)+'</td><td>'+esc(x.team)+(x.full?'':' <span class="note">'+x.runs+' of '+e.runs+' runs</span>')+'</td>'+cells+(e.runs>1?'<td class="t r">'+fmtT(x.total)+'</td>':'')+'</tr>';
     }).join('');
-    return '<div class="panel"><div class="hrow"><h3>'+esc(e.type)+'</h3><span class="note">'+(e.runs>1?'Ranked by total of '+e.runs+' runs':'Single run')+'</span></div><div class="wrap"><table class="table"><tr><th>#</th><th>Team</th>'+heads+(e.runs>1?'<th class="r">Total</th>':'')+'</tr>'+body+'</table></div><div class="note">'+(e.runs>1?'The large medal is each team\'s place by total. The small medals mark the three fastest single times in this event so far.':'Medals show each team\'s place.')+'</div></div>';
+    return '<div class="panel"><div class="hrow"><h3>'+esc(e.type)+'</h3><span class="note">'+(e.runs>1?'Ranked by total of '+e.runs+' runs':'Single run')+'</span></div><div class="wrap"><table class="table"><tr><th>#</th><th>Team</th>'+heads+(e.runs>1?'<th class="r">Total</th>':'')+'</tr>'+body+'</table></div><div class="note">'+(e.runs>1?'The large medal is each team\'s place by total. The &#9889; badges mark the four fastest single times in this event so far.':'Medals show each team\'s place. The &#9889; badges mark the four fastest times.')+'</div></div>';
   }).join('');
 }
 function lanesView(){
@@ -284,7 +291,7 @@ function setupView(){
     '<div class="panel"><h3>GitHub token</h3><div class="note">Needed to publish. Paste the token once on this device. It stays in this browser only and is never saved in the page or the repo. '+(lsGet('dbrr-token')?'A token is saved here.':'No token saved yet.')+'</div><label>Token<input type="password" data-token="1" placeholder="github_pat_..." autocomplete="off"></label></div>'+
     '<div class="panel"><h3>Share and export</h3><div class="note">Saving a heat publishes it to the public page, which refreshes for participants within about a minute. Participants get Results and Standings only. You get these controls by opening the page address with #judge on the end. The Excel workbook has every result with its lane, a heat-by-team grid like last year\'s, standings and lane stats.</div><div class="row2"><button class="primary" data-act="xlsx">Download Excel</button><button data-act="bkcsv">Backup (CSV)</button><button data-act="bkjson">Backup (full data)</button><button data-act="publish">Publish now</button><button class="danger" data-act="clearall">'+(armed==='clear'?'Tap again to erase all heats':'Erase all heats')+'</button></div></div>';
 }
-function render(){
+function render(){FAST=fastMap();
   var v=!judge?(tab==='standings'?standingsView():resultsView()):(tab==='enter'?enterView():tab==='standings'?standingsView():tab==='lanes'?lanesView():tab==='setup'?setupView():resultsView());
   $('#root').innerHTML=head()+tabsHtml()+v;
 }
