@@ -1,6 +1,6 @@
 {
  "v": 2,
- "rev": 20,
+ "rev": 21,
  "title": "Halloween Howl 2026",
  "date": "2026-11-01",
  "lanes": 4,
@@ -270,6 +270,32 @@
      "lane": 4,
      "team": "Oyster Point Giants",
      "t": 11937,
+     "st": "ok"
+    }
+   ]
+  },
+  {
+   "id": "hmvy4srgl",
+   "n": 4,
+   "type": "500 Qual",
+   "ts": 1793555772933,
+   "rows": [
+    {
+     "lane": 1,
+     "team": "South Boo! Synergy",
+     "t": 10763,
+     "st": "ok"
+    },
+    {
+     "lane": 3,
+     "team": "Rough Riders",
+     "t": 13414,
+     "st": "ok"
+    },
+    {
+     "lane": 4,
+     "team": "Oakland Renegades",
+     "t": 12477,
      "st": "ok"
     }
    ]
