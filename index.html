@@ -239,12 +239,12 @@ function enterView(){
   var d=draft,ed=!!d.id;
   var rows=d.rows.map(function(r,i){
     var fr=d.free;
-    return '<div class="lane" style="--lc:'+LC[(fr?(parseInt(r.lane,10)||1)-1:i)%6]+'">'+(fr?'<input class="num" data-f="lane" data-i="'+i+'" value="'+esc(r.lane)+'" placeholder="Ln" inputmode="numeric" maxlength="1" aria-label="Row '+(i+1)+' lane" style="width:44px;text-align:center">':'<span class="num">'+(i+1)+'</span>')+'<input data-f="team" data-i="'+i+'" list="teams" placeholder="'+(fr?'Team '+(i+1):'Team in lane '+(i+1))+'" value="'+esc(r.team)+'" aria-label="'+(fr?'Team '+(i+1):'Lane '+(i+1)+' team')+'">'+
+    return '<div class="lane" style="--lc:'+LC[i%6]+'"><span class="num">'+(i+1)+'</span>'+'<input data-f="team" data-i="'+i+'" list="teams" placeholder="'+(fr?'Team '+(i+1):'Team in lane '+(i+1))+'" value="'+esc(r.team)+'" aria-label="'+(fr?'Team '+(i+1):'Lane '+(i+1)+' team')+'">'+
       '<div class="f2"><input class="time" data-f="time" data-i="'+i+'" value="'+esc(r.time)+'" placeholder="MM:SS:ff" inputmode="numeric" aria-label="Lane '+(i+1)+' time"><select data-f="st" data-i="'+i+'" aria-label="Lane '+(i+1)+' status">'+[['ok','Finished'],['DNS','DNS'],['DNF','DNF'],['DQ','DQ']].map(function(o){return '<option value="'+o[0]+'"'+(r.st===o[0]?' selected':'')+'>'+o[1]+'</option>'}).join('')+'</select></div></div>';
   }).join('');
   return '<div class="panel"><div class="hrow"><h3>'+(ed?'Editing heat '+d.n:'New heat')+'</h3>'+(ed?'<span class="tag">Editing</span>':'')+'</div>'+
     (ed?'<div class="note">This heat is already saved. Change anything and tap Save changes.</div>':'')+(sched(d.n)?'<div class="note">Scheduled '+esc(sched(d.n).start)+' - '+esc(sched(d.n).type)+'. Teams are filled in from the race grid.</div>':'')+'<div class="grid2"><label>Heat number<input type="number" min="1" data-f="n" value="'+d.n+'" inputmode="numeric"></label><label>Event<input data-f="type" list="types" value="'+esc(d.type)+'"></label></div><div class="row2"><button class="small" data-act="hprev">Previous heat</button><button class="small" data-act="hnext">Next heat</button></div>'+
-    rows+'<div class="note">Type a time as 030552 or 03:05:52. '+(hund(d.type)?'For this event the last two digits are hundredths of a second (00 to 99).':'The last two digits are sixtieths of a second (00 to 59).')+' Leave a lane empty if no boat ran in it.'+(d.free?' This is a continuous race: type each team\'s lane number in the small box (lanes can repeat).':'')+'</div>'+
+    rows+'<div class="note">Type a time as 030552 or 03:05:52. '+(hund(d.type)?'For this event the last two digits are hundredths of a second (00 to 99).':'The last two digits are sixtieths of a second (00 to 59).')+' Leave a lane empty if no boat ran in it.'+(d.free?'':'')+'</div>'+
     '<button class="primary big" data-act="saveheat">'+(ed?'Save changes':'Save heat')+'</button>'+
     (ed?'<div class="row2"><button class="small" data-act="canceledit">Cancel editing</button><button class="small danger" data-act="delheat" data-id="'+d.id+'">'+(armed==='del'?'Tap again to delete this heat':'Delete this heat')+'</button></div>':'')+
     '</div><datalist id="teams">'+teamNames().map(function(t){return '<option value="'+esc(t)+'">'}).join('')+'</datalist><datalist id="types">'+(S.types||[]).map(function(t){return '<option value="'+esc(t)+'">'}).join('')+'</datalist>';
@@ -271,8 +271,8 @@ function resultsView(){
   var hs=all.filter(function(h){return (!fHeat||h.id===fHeat)&&(!fTeam||h.rows.some(function(r){return sameTeam(r,fTeam)}))});
   var cards=hs.length?hs.map(function(h){
     var pl=placed(h.rows),rows=h.rows.slice().sort(function(a,b){var pa=pl.get(a),pb=pl.get(b);if(pa&&pb)return pa-pb||a.lane-b.lane;if(pa)return -1;if(pb)return 1;return a.lane-b.lane});
-    var body=rows.map(function(r){var p=pl.get(r);return '<tr'+(fTeam&&sameTeam(r,fTeam)?' class="me"':'')+'><td>'+badge(p)+'</td><td>'+esc(r.team)+'</td><td><span class="dot" style="background:'+LC[(r.lane-1)%6]+'"></span>Lane '+r.lane+'</td><td class="t r">'+(fin(r)?fmtT(r.t,h.type)+fastB(h.type,r.t):'<span style="color:var(--stop)">'+r.st+'</span>')+'</td></tr>'}).join('');
-    return '<div class="panel"><div class="hrow"><h3>Heat '+h.n+' <span class="tag">'+esc(h.type)+'</span></h3>'+(judge?'<button class="small" data-act="edit" data-id="'+h.id+'">Edit</button>':'')+'</div><div class="wrap"><table class="table"><tr><th>Pl</th><th>Team</th><th>Lane</th><th class="r">Time</th></tr>'+body+'</table></div></div>';
+    var body=rows.map(function(r){var p=pl.get(r);return '<tr'+(fTeam&&sameTeam(r,fTeam)?' class="me"':'')+'><td>'+badge(p)+'</td><td>'+esc(r.team)+'</td>'+(h.free?'':'<td><span class="dot" style="background:'+LC[(r.lane-1)%6]+'"></span>Lane '+r.lane+'</td>')+'<td class="t r">'+(fin(r)?fmtT(r.t,h.type)+fastB(h.type,r.t):'<span style="color:var(--stop)">'+r.st+'</span>')+'</td></tr>'}).join('');
+    return '<div class="panel"><div class="hrow"><h3>Heat '+h.n+' <span class="tag">'+esc(h.type)+'</span></h3>'+(judge?'<button class="small" data-act="edit" data-id="'+h.id+'">Edit</button>':'')+'</div><div class="wrap"><table class="table"><tr><th>Pl</th><th>Team</th>'+(h.free?'':'<th>Lane</th>')+'<th class="r">Time</th></tr>'+body+'</table></div></div>';
   }).join('')+'<div class="note">The &#9889; badge marks the four fastest times in each event so far.</div>':'<div class="panel empty">No heats match those choices.</div>';
   return bar+(fTeam?teamSummary(teams.filter(function(t){return t.toLowerCase()===fTeam.toLowerCase()})[0]):'')+cards;
 }
@@ -324,9 +324,8 @@ function saveHeat(){
   d.rows.forEach(function(r,i){
     var team=r.team.trim(),tm=r.time.trim();
     if(!team&&!tm&&r.st==='ok')return;
-    if(d.free&&!team&&!tm&&r.st==='ok'&&!r.lane)return;
     if(!team){err='Lane '+(i+1)+' needs a team name.';return}
-    var ln=d.free?parseInt(r.lane,10):i+1;if(!(ln>=1&&ln<=S.lanes)){err='Row '+(i+1)+' needs a lane number from 1 to '+S.lanes+'.';return}
+    var ln=d.free?0:i+1;
     if(d.free&&r.st==='ok'&&!tm){skipped.push(team);return}
     var t=null;if(r.st==='ok'){t=parseT(tm,d.type);if(t==null){err=(d.free?'Row ':'Lane ')+(i+1)+' ('+team+') time is not valid. Use MM:SS:ff with ff from 00 to '+(hund(d.type)?'99':'59')+'.';return}}
     rows.push({lane:ln,team:team,t:r.st==='ok'?t:null,st:r.st});
@@ -364,10 +363,10 @@ function loadRemote(){
 function exportXlsx(){
   if(!window.XLSX){toast('Excel export could not load. Check the connection.');return}
   var hs=heatsSorted(),data=[['Heat','Event','Lane','Team','Time (MM:SS:ff)','Seconds','Place in heat','Status']];
-  hs.forEach(function(h){var pl=placed(h.rows);h.rows.slice().sort(function(a,b){return a.lane-b.lane}).forEach(function(r){data.push([h.n,h.type,r.lane,r.team,fin(r)?fmtT(r.t,h.type):'',fin(r)?secs(r.t):'',pl.get(r)||'',fin(r)?'Finished':r.st])})});
+  hs.forEach(function(h){var pl=placed(h.rows);h.rows.slice().sort(function(a,b){return a.lane-b.lane}).forEach(function(r){data.push([h.n,h.type,h.free?'':r.lane,r.team,fin(r)?fmtT(r.t,h.type):'',fin(r)?secs(r.t):'',pl.get(r)||'',fin(r)?'Finished':r.st])})});
   var teams=teamNames().filter(function(t){return hs.some(function(h){return h.rows.some(function(r){return r.team===t})})});
   var m1=[['Heat','Event'].concat(teams)],m2=[['Heat','Event'].concat(teams)];
-  hs.forEach(function(h){var a=[h.n,h.type],b=[h.n,h.type];teams.forEach(function(t){var r=h.rows.filter(function(x){return x.team===t})[0];a.push(r?(fin(r)?fmtT(r.t,h.type):r.st):'');b.push(r?r.lane:'')});m1.push(a);m2.push(b)});
+  hs.forEach(function(h){var a=[h.n,h.type],b=[h.n,h.type];teams.forEach(function(t){var r=h.rows.filter(function(x){return x.team===t})[0];a.push(r?(fin(r)?fmtT(r.t,h.type):r.st):'');b.push(r&&!h.free?r.lane:'')});m1.push(a);m2.push(b)});
   var sd=[['Event','Rank','Team','Total (MM:SS:ff)','Total seconds','Runs','Of']];
   standings().forEach(function(e){e.list.forEach(function(x){sd.push([e.type,x.rank||'',x.team,fmtT(x.total,e.type),secs(x.total),x.runs,e.runs])})});
   var ls=laneStats(),ld=[['Lane','Runs','Wins','Avg place','Avg vs heat average (s)','Fastest time','Fastest event','Fastest team']];
@@ -387,7 +386,7 @@ function backup(kind){
   if(kind==='json'){fn=base+'.json';data=JSON.stringify(S,null,1)}
   else{
     var q=function(v){v=String(v==null?'':v);return /[",\n]/.test(v)?'"'+v.replace(/"/g,'""')+'"':v},rows=[['Heat','Event','Lane','Team','Time (MM:SS:ff)','Seconds','Place in heat','Status']];
-    heatsSorted().forEach(function(h){var pl=placed(h.rows);h.rows.slice().sort(function(a,b){return a.lane-b.lane}).forEach(function(r){rows.push([h.n,h.type,r.lane,r.team,fin(r)?fmtT(r.t,h.type):'',fin(r)?secs(r.t):'',pl.get(r)||'',fin(r)?'Finished':r.st])})});
+    heatsSorted().forEach(function(h){var pl=placed(h.rows);h.rows.slice().sort(function(a,b){return a.lane-b.lane}).forEach(function(r){rows.push([h.n,h.type,h.free?'':r.lane,r.team,fin(r)?fmtT(r.t,h.type):'',fin(r)?secs(r.t):'',pl.get(r)||'',fin(r)?'Finished':r.st])})});
     fn=base+'.csv';data=rows.map(function(r){return r.map(q).join(',')}).join('\n')+'\n';
   }
   dl.save({filename:fn,data:data}).then(function(){lsSet('dbrr-bk',(S.heats||[]).length);toast('Backup saved');render()}).catch(function(e){if(!e||e.code!=='declined')toast('Could not save the backup.')});
