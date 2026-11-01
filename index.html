@@ -320,14 +320,15 @@ function render(){FAST=fastMap();
 
 /* ---- actions ---- */
 function saveHeat(){
-  var d=draft,rows=[],err='';
+  var d=draft,rows=[],err='',skipped=[];
   d.rows.forEach(function(r,i){
     var team=r.team.trim(),tm=r.time.trim();
     if(!team&&!tm&&r.st==='ok')return;
     if(d.free&&!team&&!tm&&r.st==='ok'&&!r.lane)return;
     if(!team){err='Lane '+(i+1)+' needs a team name.';return}
     var ln=d.free?parseInt(r.lane,10):i+1;if(!(ln>=1&&ln<=S.lanes)){err='Row '+(i+1)+' needs a lane number from 1 to '+S.lanes+'.';return}
-    var t=null;if(r.st==='ok'){t=parseT(tm,d.type);if(t==null){err='Lane '+(i+1)+' time is not valid. Use MM:SS:ff with ff from 00 to '+(hund(d.type)?'99':'59')+'.';return}}
+    if(d.free&&r.st==='ok'&&!tm){skipped.push(team);return}
+    var t=null;if(r.st==='ok'){t=parseT(tm,d.type);if(t==null){err=(d.free?'Row ':'Lane ')+(i+1)+' ('+team+') time is not valid. Use MM:SS:ff with ff from 00 to '+(hund(d.type)?'99':'59')+'.';return}}
     rows.push({lane:ln,team:team,t:r.st==='ok'?t:null,st:r.st});
   });
   if(err){toast(err);return}
@@ -338,7 +339,7 @@ function saveHeat(){
   var n=Math.max(1,parseInt(d.n,10)||1);
   if(d.id){var h=S.heats.filter(function(x){return x.id===d.id})[0];h.n=n;h.type=type;h.rows=rows;if(d.free)h.free=d.free}
   else{S.heats=S.heats||[];S.heats.push({id:'h'+Date.now().toString(36),n:n,type:type,ts:Date.now(),rows:rows,free:d.free||undefined})}
-  commit();draft=blankDraft(type);saveDraft();toast('Heat '+n+' saved');render();publish();
+  commit();draft=blankDraft(type);saveDraft();toast('Heat '+n+' saved'+(skipped.length?'. Left out, no time: '+skipped.join(', '):''));render();publish();
 }
 var pubChain=Promise.resolve();
 function publish(){pubChain=pubChain.then(doPublish);return pubChain}
