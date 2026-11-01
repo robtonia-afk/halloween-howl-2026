@@ -1,6 +1,6 @@
 {
  "v": 2,
- "rev": 29,
+ "rev": 30,
  "title": "Halloween Howl 2026",
  "date": "2026-11-01",
  "lanes": 4,
@@ -118,7 +118,29 @@
   },
   {
    "n": 9,
-   "start": "12:20 PM",
+   "start": "11:50 AM",
+   "type": "500 Qual",
+   "lanes": [
+    "",
+    "",
+    "",
+    ""
+   ]
+  },
+  {
+   "n": 10,
+   "start": "12:15 PM",
+   "type": "500 Qual",
+   "lanes": [
+    "",
+    "",
+    "",
+    ""
+   ]
+  },
+  {
+   "n": 11,
+   "start": "1:10 PM",
    "type": "Backpaddle",
    "lanes": [
     "Rough Riders",
@@ -128,8 +150,8 @@
    ]
   },
   {
-   "n": 10,
-   "start": "12:45 PM",
+   "n": 12,
+   "start": "1:35 PM",
    "type": "Backpaddle",
    "lanes": [
     "Summon the Dragon",
@@ -139,8 +161,8 @@
    ]
   },
   {
-   "n": 11,
-   "start": "1:10 PM",
+   "n": 13,
+   "start": "2:00 PM",
    "type": "Backpaddle",
    "lanes": [
     "Dieselfish",
@@ -150,8 +172,8 @@
    ]
   },
   {
-   "n": 12,
-   "start": "1:35 PM",
+   "n": 14,
+   "start": "2:25 PM",
    "type": "Backpaddle",
    "lanes": [
     "Golden HK Dragons",
@@ -161,19 +183,15 @@
    ]
   },
   {
-   "n": 13,
-   "start": "2:00 PM",
+   "n": 15,
+   "start": "2:50 PM",
    "type": "1000",
-   "lanes": [
-    "",
-    "",
-    "",
-    ""
-   ]
+   "lanes": [],
+   "free": 15
   },
   {
-   "n": 14,
-   "start": "2:45 PM",
+   "n": 16,
+   "start": "3:35 PM",
    "type": "Mixed Final",
    "lanes": [
     "",
@@ -397,6 +415,33 @@
      "st": "ok"
     }
    ]
+  },
+  {
+   "id": "hmvyabrjc",
+   "n": 9,
+   "type": "500 Qual",
+   "ts": 1793565057576,
+   "rows": [
+    {
+     "lane": 1,
+     "team": "Dieselfish",
+     "t": 10960,
+     "st": "ok"
+    },
+    {
+     "lane": 3,
+     "team": "Rose City Renegades",
+     "t": 11262,
+     "st": "ok"
+    },
+    {
+     "lane": 4,
+     "team": "SJSU Doggy Paddle",
+     "t": 11097,
+     "st": "ok"
+    }
+   ]
   }
- ]
+ ],
+ "mig": 1
 }
