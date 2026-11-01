@@ -1,6 +1,6 @@
 {
  "v": 2,
- "rev": 23,
+ "rev": 24,
  "title": "Halloween Howl 2026",
  "date": "2026-11-01",
  "lanes": 4,
@@ -284,6 +284,32 @@
      "lane": 4,
      "team": "Oakland Renegades",
      "t": 12477,
+     "st": "ok"
+    }
+   ]
+  },
+  {
+   "id": "hmvy5jlyh",
+   "n": 5,
+   "type": "500 Qual",
+   "ts": 1793557025513,
+   "rows": [
+    {
+     "lane": 1,
+     "team": "KP Dragons Broccoli",
+     "t": 10776,
+     "st": "ok"
+    },
+    {
+     "lane": 3,
+     "team": "Golden HK Dragons",
+     "t": 12015,
+     "st": "ok"
+    },
+    {
+     "lane": 4,
+     "team": "Dragonmax 1",
+     "t": 11946,
      "st": "ok"
     }
    ]
