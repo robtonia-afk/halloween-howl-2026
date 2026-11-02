@@ -1,6 +1,6 @@
 {
  "v": 2,
- "rev": 37,
+ "rev": 38,
  "title": "Halloween Howl 2026",
  "date": "2026-11-01",
  "lanes": 4,
@@ -652,6 +652,32 @@
     }
    ],
    "free": 15
+  },
+  {
+   "id": "hmvyhzdrn",
+   "n": 16,
+   "type": "Mixed Final",
+   "ts": 1793577916787,
+   "rows": [
+    {
+     "lane": 1,
+     "team": "South Boo! Synergy",
+     "t": 9820,
+     "st": "ok"
+    },
+    {
+     "lane": 3,
+     "team": "Ripple Effect - Let's Get Jacked",
+     "t": 10325,
+     "st": "ok"
+    },
+    {
+     "lane": 4,
+     "team": "Dieselfish",
+     "t": 12051,
+     "st": "ok"
+    }
+   ]
   }
  ],
  "mig": 1
